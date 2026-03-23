@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/sitemap.xml/route": "/sitemap.xml",
+  "/toroidal_transformers/page": "/toroidal_transformers",
+  "/current_transformer/page": "/current_transformer",
+  "/potentiometer/page": "/potentiometer",
+  "/wirewound_resistors/page": "/wirewound_resistors",
+  "/about_us/page": "/about_us",
+  "/page": "/"
+}

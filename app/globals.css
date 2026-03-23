@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   ETCC MANUFACTURING DESIGN SYSTEM
+   Efficient Toroidal Coil Corporation
+   ============================================ */
+
+/* ============================================
+   1. FONT DECLARATIONS
+   ============================================ */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'CooperLtBT';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Cooper Lt BT'), local('CooperLtBT');
+}
+
+/* ============================================
+   2. DESIGN TOKENS
+   ============================================ */
+
+@layer base {
+  :root {
+    /* Font Families */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    --font-heading: 'CooperLtBT', Georgia, 'Times New Roman', serif;
+
+    /* ETCC Brand Colors (HSL) */
+    --etcc-primary: 213 90% 42%;
+    --etcc-primary-light: 213 85% 55%;
+    --etcc-primary-dark: 213 92% 32%;
+
+    /* Backgrounds — Stone palette */
+    --etcc-bg-light: 20 14% 98%;
+    --etcc-bg-neutral: 20 6% 96%;
+    --etcc-bg-dark: 20 14% 10%;
+
+    /* Text Colors — Stone palette */
+    --etcc-text-primary: 20 14% 10%;
+    --etcc-text-secondary: 25 6% 45%;
+    --etcc-text-muted: 24 6% 64%;
+
+    /* Shadcn Semantic Tokens — Stone palette */
+    --background: 20 14% 98%;
+    --foreground: 20 14% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 20 14% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14% 10%;
+
+    --primary: 213 90% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 20 6% 96%;
+    --secondary-foreground: 20 14% 10%;
+
+    --muted: 20 6% 96%;
+    --muted-foreground: 25 6% 45%;
+
+    --accent: 213 85% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 24 6% 90%;
+    --input: 24 6% 90%;
+    --ring: 213 90% 42%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar (not used but required) */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 213 90% 42%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 213 90% 42%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.06);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 20 14% 10%;
+    --foreground: 20 14% 98%;
+    --card: 20 14% 14%;
+    --card-foreground: 20 14% 98%;
+    --popover: 20 14% 14%;
+    --popover-foreground: 20 14% 98%;
+    --primary: 213 85% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 12 6% 15%;
+    --secondary-foreground: 20 14% 98%;
+    --muted: 12 6% 15%;
+    --muted-foreground: 24 6% 64%;
+    --accent: 213 85% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 12 6% 22%;
+    --input: 12 6% 22%;
+    --ring: 213 85% 55%;
+    --sidebar-background: 20 14% 10%;
+    --sidebar-foreground: 20 14% 98%;
+    --sidebar-primary: 213 85% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 12 6% 18%;
+    --sidebar-accent-foreground: 20 14% 98%;
+    --sidebar-border: 12 6% 22%;
+    --sidebar-ring: 213 85% 55%;
+  }
+}
+
+/* ============================================
+   3. BASE STYLES
+   ============================================ */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    line-height: 1.2;
+    @apply text-foreground;
+  }
+
+  h1 { font-size: clamp(2rem, 4vw, 3rem); }
+  h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); }
+  h3 { font-size: clamp(1.375rem, 2.5vw, 1.875rem); }
+  h4 { font-size: 1.5rem; }
+  h5 { font-size: 1.25rem; }
+  h6 { font-size: 1.125rem; }
+}
+
+/* ============================================
+   4. COMPONENT UTILITIES
+   ============================================ */
+
+@layer components {
+  .main-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @media (min-width: 640px) {
+    .main-container {
+      padding-left: 48px;
+      padding-right: 48px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .main-container {
+      padding-left: 80px;
+      padding-right: 80px;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .main-container {
+      padding-left: 128px;
+      padding-right: 128px;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .main-container {
+      padding-left: 212px;
+      padding-right: 212px;
+    }
+  }
+
+  .section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .section-lg {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* ============================================
+   5. ANIMATIONS
+   ============================================ */
+
+@layer utilities {
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.4s ease-out forwards;
+  }
+
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+}

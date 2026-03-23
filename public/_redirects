@@ -1,0 +1,21 @@
+# 301 Redirects — old indexed URLs → new pages
+# Source must match exact casing (Cloudflare Pages is case-sensitive)
+# Format: source  destination  status
+
+/toroidal-power-transformers-manufacturers.html  /toroidal_transformers  301
+/products.html  /  301
+/about.html  /about_us  301
+/projects.html  /  301
+/Rheostat.html  /wirewound_resistors  301
+/Wire-Wound-Resistor.html  /wirewound_resistors  301
+/Wire-wound-Single-turn-Potentiometer.html  /potentiometer  301
+/Linear-Potentiometer.html  /potentiometer  301
+/ETC-Brand-CT.html  /current_transformer  301
+/current-transformer-manufacturers.html  /current_transformer  301
+
+# Lowercase safety variants for mixed-case URLs
+/rheostat.html  /wirewound_resistors  301
+/wire-wound-resistor.html  /wirewound_resistors  301
+/wire-wound-single-turn-potentiometer.html  /potentiometer  301
+/linear-potentiometer.html  /potentiometer  301
+/etc-brand-ct.html  /current_transformer  301
