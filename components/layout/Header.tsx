@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button";
 import QuoteModal from "@/components/QuoteModal";
 
 const productLinks = [
-  { label: "Toroidal Transformers", href: "/toroidal_transformers" },
+  { label: "Toroidal Transformers", href: "/toroidal-transformers" },
   { label: "Potentiometers", href: "/potentiometer" },
-  { label: "Current Transformers", href: "/current_transformer" },
-  { label: "Wire Wound Resistors & Rheostats", href: "/wirewound_resistors" },
+  { label: "Current Transformers", href: "/current-transformer" },
+  { label: "Wire Wound Resistors & Rheostats", href: "/wirewound-resistors" },
 ];
 
 const Header = () => {
@@ -82,9 +82,9 @@ const Header = () => {
               </div>
 
               <Link
-                href="/about_us"
+                href="/about-us"
                 className={`rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-stone-100 hover:text-primary ${
-                  pathname === "/about_us" ? "bg-stone-100 text-primary" : "text-stone-700"
+                  pathname === "/about-us" ? "bg-stone-100 text-primary" : "text-stone-700"
                 }`}
               >
                 About Us
@@ -145,9 +145,9 @@ const Header = () => {
               ))}
               <hr className="my-2 border-stone-200" />
               <Link
-                href="/about_us"
+                href="/about-us"
                 className={`rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-stone-100 ${
-                  pathname === "/about_us" ? "font-medium text-primary bg-stone-100" : "text-stone-700"
+                  pathname === "/about-us" ? "font-medium text-primary bg-stone-100" : "text-stone-700"
                 }`}
                 onClick={() => setMobileOpen(false)}
               >

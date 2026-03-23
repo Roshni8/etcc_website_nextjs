@@ -2,20 +2,22 @@
 # Source must match exact casing (Cloudflare Pages is case-sensitive)
 # Format: source  destination  status
 
-/toroidal-power-transformers-manufacturers.html  /toroidal_transformers  301
+/toroidal-power-transformers-manufacturers.html  /toroidal-transformers  301
+# TODO Phase 2: /products.html should redirect to a dedicated /products page, not homepage (soft 404 risk)
 /products.html  /  301
-/about.html  /about_us  301
+/about.html  /about-us  301
+# TODO Phase 2: /projects.html should redirect to a dedicated /projects page, not homepage (soft 404 risk)
 /projects.html  /  301
-/Rheostat.html  /wirewound_resistors  301
-/Wire-Wound-Resistor.html  /wirewound_resistors  301
+/Rheostat.html  /wirewound-resistors  301
+/Wire-Wound-Resistor.html  /wirewound-resistors  301
 /Wire-wound-Single-turn-Potentiometer.html  /potentiometer  301
 /Linear-Potentiometer.html  /potentiometer  301
-/ETC-Brand-CT.html  /current_transformer  301
-/current-transformer-manufacturers.html  /current_transformer  301
+/ETC-Brand-CT.html  /current-transformer  301
+/current-transformer-manufacturers.html  /current-transformer  301
 
 # Lowercase safety variants for mixed-case URLs
-/rheostat.html  /wirewound_resistors  301
-/wire-wound-resistor.html  /wirewound_resistors  301
+/rheostat.html  /wirewound-resistors  301
+/wire-wound-resistor.html  /wirewound-resistors  301
 /wire-wound-single-turn-potentiometer.html  /potentiometer  301
 /linear-potentiometer.html  /potentiometer  301
-/etc-brand-ct.html  /current_transformer  301
+/etc-brand-ct.html  /current-transformer  301

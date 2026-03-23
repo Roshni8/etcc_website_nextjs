@@ -2,10 +2,10 @@ import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 const productLinks = [
-  { label: "Toroidal Transformers", href: "/toroidal_transformers" },
+  { label: "Toroidal Transformers", href: "/toroidal-transformers" },
   { label: "Potentiometers", href: "/potentiometer" },
-  { label: "Current Transformers", href: "/current_transformer" },
-  { label: "Wire Wound Resistors", href: "/wirewound_resistors" },
+  { label: "Current Transformers", href: "/current-transformer" },
+  { label: "Wire Wound Resistors", href: "/wirewound-resistors" },
 ];
 
 const Footer = () => {
@@ -46,7 +46,7 @@ const Footer = () => {
               <Link href="/" className="text-sm opacity-70 transition-opacity hover:opacity-100">
                 Home
               </Link>
-              <Link href="/about_us" className="text-sm opacity-70 transition-opacity hover:opacity-100">
+              <Link href="/about-us" className="text-sm opacity-70 transition-opacity hover:opacity-100">
                 About Us
               </Link>
             </nav>

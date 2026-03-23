@@ -13,13 +13,13 @@ const slides = [
     image: "/assets/products-400htz.png",
     title: "Toroidal Transformers",
     subtitle: "High-frequency 400 Hz, high-efficiency, fully custom transformers — engineered to your exact specifications.",
-    link: "/toroidal_transformers",
+    link: "/toroidal-transformers",
   },
   {
     image: "/assets/products-current-transformer.png",
     title: "Current Transformers",
     subtitle: "Precision current measurement transformers for metering, protection, and power quality monitoring.",
-    link: "/current_transformer",
+    link: "/current-transformer",
   },
   {
     image: "/assets/products-potentiometer.png",
@@ -31,7 +31,7 @@ const slides = [
     image: "/assets/products-assorted.png",
     title: "Wirewound Resistors",
     subtitle: "High-power wire wound resistors and rheostats built for demanding industrial environments.",
-    link: "/wirewound_resistors",
+    link: "/wirewound-resistors",
   },
 ];
 
@@ -152,7 +152,7 @@ const Index = () => {
           <ProductCard
             title="Toroidal Transformers"
             description="High-efficiency toroidal transformers with low magnetic field radiation, compact size, and custom voltage ratings."
-            href="/toroidal_transformers"
+            href="/toroidal-transformers"
             icon={<Zap className="h-7 w-7" />}
           />
           <ProductCard
@@ -164,13 +164,13 @@ const Index = () => {
           <ProductCard
             title="Current Transformers"
             description="Accurate current measurement transformers for metering, protection, and power monitoring systems."
-            href="/current_transformer"
+            href="/current-transformer"
             icon={<Activity className="h-7 w-7" />}
           />
           <ProductCard
             title="Wire Wound Resistors"
             description="High-power wire wound resistors and rheostats designed for demanding industrial environments."
-            href="/wirewound_resistors"
+            href="/wirewound-resistors"
             icon={<Wrench className="h-7 w-7" />}
           />
         </div>
@@ -264,7 +264,7 @@ const Index = () => {
                 asChild
                 className="border-stone-300/30 text-stone-900 bg-stone-100 hover:bg-stone-200 hover:border-stone-200"
               >
-                <Link href="/about_us">Learn About Us</Link>
+                <Link href="/about-us">Learn About Us</Link>
               </Button>
             </div>
           </div>

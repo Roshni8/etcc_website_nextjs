@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageClient from "./PageClient";
 
 export const metadata: Metadata = {
-  title: "Wire Wound Servo Potentiometer Manufacturer | ETCC India",
+  title: { absolute: "Wire Wound Servo Potentiometer Manufacturer | ETCC India" },
   description:
     "Precision wire wound servo potentiometers for industrial and defence use. Custom specifications, 2W to 7W, linear, ganged and multi-turn configurations. Manufacturer in Pune.",
   alternates: {
