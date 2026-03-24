@@ -2,6 +2,9 @@
 # Source must match exact casing (Cloudflare Pages is case-sensitive)
 # Format: source  destination  status
 
+# www → non-www canonical redirect
+https://www.etccindia.com/*  https://etccindia.com/:splat  301
+
 /toroidal-power-transformers-manufacturers.html  /toroidal-transformers  301
 # TODO Phase 2: /products.html should redirect to a dedicated /products page, not homepage (soft 404 risk)
 /products.html  /  301
