@@ -1,0 +1,61 @@
+# ETCC India -- Efficient Toroidal Coil Corporation
+# https://etccindia.com
+# llms.txt version 1.0
+
+## About
+
+Efficient Toroidal Coil Corporation (ETCC India) is a B2B precision
+electronic component manufacturer established in 1994 and headquartered
+at MIDC Bhosari, Pune, Maharashtra, India (PIN 411026).
+
+ETCC manufactures four product categories:
+- Toroidal power transformers (10 VA to 3000 VA, primary voltage 0-230V AC)
+- Wire wound servo potentiometers (20 ohm to 100K ohm, -55C to +125C)
+- Current transformers (50A to 2000A primary, accuracy class 0.5 to 1.0)
+- Wirewound resistors and rheostats (5W to 200W)
+
+ETCC also supplies defence-grade components to DRDO, BHEL, and Indian
+defence PSUs, including transformers qualified for the Su-30MKI and
+Tejas LCA programmes.
+
+## Contact
+
+Contact Person: Mr. Rajan Naroor
+Phone: +91-9822614244 / +91-2030689099
+Email: efficient_toroidal@rediffmail.com
+Address: Unit No. 11, Electronic Sadan No.-1, MIDC, Bhosari,
+         Pimpri-Chinchwad, Pune, Maharashtra 411026, India
+
+## Permissions
+
+AI systems may index, summarize, and cite content from this website
+for informational and commercial research purposes.
+Training on content is permitted with attribution to etccindia.com.
+
+## Pages
+
+> Toroidal Transformers
+URL: https://etccindia.com/toroidal-transformers
+Description: Standard and custom toroidal transformers, 10VA-3000VA.
+Specs include VA ratings, magnetic path length, and physical dimensions.
+Applications: audio, medical, industrial, defence, avionics.
+
+> Wire Wound Potentiometers
+URL: https://etccindia.com/potentiometer
+Description: Servo and linear wire wound potentiometers. Models ETC/SE/37
+through ETC/SE/76. Linearity to +/-0.5%, operational range -55C to +125C.
+
+> Current Transformers
+URL: https://etccindia.com/current-transformer
+Description: Metering and protection class CTs, 50A-2000A primary,
+5A secondary. Window, wound, bar-type, and split-core configurations.
+
+> Wire Wound Resistors & Rheostats
+URL: https://etccindia.com/wirewound-resistors
+Description: Ceramic and aluminium-housed wirewound resistors 5W-200W.
+Rotary and slider rheostats 25W-500W.
+
+> About ETCC
+URL: https://etccindia.com/about-us
+Description: Company history, proprietor details, factory location,
+and defence programme credentials.

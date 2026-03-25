@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import QuoteModal from "@/components/QuoteModal";
+
+const QuoteModal = dynamic(() => import("@/components/QuoteModal"), { ssr: false });
 
 const productLinks = [
   { label: "Toroidal Transformers", href: "/toroidal-transformers" },
@@ -29,7 +31,7 @@ const Header = () => {
           <div className="flex h-14 items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5">
-              <img src="/assets/etcc-logo.png" alt="ETCC Logo" className="h-9 w-auto" />
+              <img src="/assets/etcc-logo.svg" alt="ETCC Logo" className="h-9 w-auto" width="120" height="36" />
               <span className="hidden sm:block text-xs font-medium text-stone-500 leading-tight max-w-[160px]">
                 Efficient Toroidal Coil Corporation
               </span>

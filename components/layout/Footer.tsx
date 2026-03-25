@@ -16,7 +16,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <Link href="/" className="inline-block">
-              <img src="/assets/etcc-logo.png" alt="ETCC Logo" className="h-12 w-auto brightness-0 invert" />
+              <img src="/assets/etcc-logo.svg" alt="ETCC Logo" className="h-12 w-auto brightness-0 invert" width="160" height="48" />
             </Link>
             <p className="text-sm leading-relaxed opacity-70">
               Efficient Toroidal Coil Corporation — Custom electromagnetic component manufacturer since 1994. Precision-engineered transformers and potentiometers made in Pune, India.
@@ -70,9 +70,16 @@ const Footer = () => {
                 <Phone className="h-4 w-4 flex-shrink-0" />
                 +91-9822614244
               </a>
+              <a
+                href="tel:+912030689099"
+                className="flex items-center gap-2 text-sm opacity-70 transition-opacity hover:opacity-100"
+              >
+                <Phone className="h-4 w-4 flex-shrink-0" />
+                +91-20-30689099
+              </a>
               <div className="flex items-start gap-2 text-sm opacity-70">
                 <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                <span>Unit No. 11, Electronic Sadan 1, MIDC, Bhosari, Pune 411026</span>
+                <span>Unit No. 11, Electronic Sadan No.-1, MIDC, Bhosari, Pimpri-Chinchwad, Pune 411026</span>
               </div>
             </div>
           </div>

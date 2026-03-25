@@ -52,10 +52,10 @@ const productImages = [
 ];
 
 const applicationCards = [
-  { title: "Servo Control", desc: "Precision position feedback for servo motors, actuators, robotics, and closed-loop control systems.", image: "/assets/app-defence.jpg", tags: ["Feedback", "Position"] },
+  { title: "Servo Control", desc: "Precision position feedback for servo motors, actuators, robotics, and closed-loop control systems.", image: "/assets/app-industrial.jpg", tags: ["Feedback", "Position"] },
   { title: "Instrumentation", desc: "High-accuracy measurement and calibration for test equipment, laboratory instruments, and data acquisition.", image: "/assets/app-medical.jpg", tags: ["Precision", "Calibration"] },
   { title: "Industrial Controls", desc: "Reliable signal generation for PLCs, process control, factory automation, and motor drive systems.", image: "/assets/app-industrial.jpg", tags: ["Automation", "PLC"] },
-  { title: "Defence & Aerospace", desc: "MIL-spec potentiometers for weapon systems, radar positioning, flight controls, and avionics equipment.", image: "/assets/app-audio.jpg", tags: ["MIL-STD", "Avionics"] },
+  { title: "Defence & Aerospace", desc: "MIL-spec potentiometers for weapon systems, radar positioning, flight controls, and avionics equipment.", image: "/assets/app-defence.jpg", tags: ["MIL-STD", "Avionics"] },
 ];
 
 const Potentiometers = () => {
@@ -65,14 +65,16 @@ const Potentiometers = () => {
     <Layout>
       {/* Hero */}
       <section className="relative border-b border-border overflow-hidden">
-        <img src="/assets/potentiometer-hero-bg.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" />
+        <img src="/assets/potentiometer-hero-bg.jpg" alt="" aria-hidden="true" width={1920} height={600} className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" />
         <div className="absolute inset-0 bg-background/40" />
         <div className="main-container py-10 md:py-14 relative z-10">
           <Breadcrumb items={[{ label: "Products", href: "/" }, { label: "Wire Wound Potentiometers" }]} />
           <h1 className="mb-4 font-heading">Wire Wound Potentiometers</h1>
           <p className="max-w-2xl text-muted-foreground">
-            Precision wire wound potentiometers for industrial, instrumentation, servo, and defence
-            applications. Available in servo, linear, ganged, and custom configurations.
+            ETCC India manufactures precision wire wound servo potentiometers at our Pune facility,
+            established in 1994. Resistance values from 20&#937; to 100k&#937;, power ratings 2W to 7W,
+            and operational temperature &#8722;55°C to +125°C. Available in servo, linear, ganged,
+            and multi-turn configurations for industrial, instrumentation, and defence applications.
           </p>
         </div>
       </section>
@@ -82,7 +84,7 @@ const Potentiometers = () => {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {productImages.map((img) => (
             <div key={img.label} className="overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card flex flex-col items-center justify-center">
-              <img src={img.src} alt={img.alt} className="w-full max-h-[280px] object-contain mb-4" loading="lazy" />
+              <img src={img.src} alt={img.alt} width={400} height={280} className="w-full max-h-[280px] object-contain mb-4" loading="lazy" />
               <p className="text-sm font-medium text-foreground">{img.label}</p>
             </div>
           ))}
@@ -143,13 +145,13 @@ const Potentiometers = () => {
       <section className="main-container section">
         <div className="mb-8">
           <h2 className="mb-3">Applications</h2>
-          <p className="text-muted-foreground">Our wire wound potentiometers serve critical roles across diverse industries.</p>
+          <p className="text-muted-foreground">Our wire wound potentiometers serve critical roles across diverse industries, with designs tested to JSS 50432 and MIL-R-19 standards.</p>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {applicationCards.map((app) => (
             <div key={app.title} className="group overflow-hidden rounded-xl border border-border bg-card">
               <div className="relative h-48 overflow-hidden">
-                <img src={app.image} alt={app.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={app.image} alt={app.title} width={400} height={192} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 <div className="absolute bottom-3 left-3 flex gap-2">
                   {app.tags.map((tag) => (
                     <span key={tag} className="rounded-full bg-background/90 px-3 py-1 text-xs font-medium text-foreground backdrop-blur-sm">{tag}</span>

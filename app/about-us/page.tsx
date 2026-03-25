@@ -21,8 +21,22 @@ export const metadata: Metadata = {
   },
 };
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://etccindia.com/" },
+    { "@type": "ListItem", position: 2, name: "About Us", item: "https://etccindia.com/about-us" },
+  ],
+};
+
 const AboutUs = () => {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
     <Layout>
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About Us" }]} />
 
@@ -61,16 +75,16 @@ const AboutUs = () => {
           <div>
             <h2 className="mb-6">Our Story</h2>
             <p className="mb-4 text-muted-foreground leading-relaxed">
-              Since its inception in <strong className="text-foreground">1994</strong>, Efficient Toroidal Coil Corporation (ETCC) has been one of the renowned names in the toroidal transformer and wire wound potentiometers industry. We at ETCC take pride in being associated with the industry that transforms the manufacturing landscape.
+              Founded in <strong className="text-foreground">1994</strong> at MIDC Bhosari in Pune, Efficient Toroidal Coil Corporation (ETCC) has spent three decades manufacturing precision electromagnetic components for India&apos;s most demanding applications. Our factory produces toroidal transformers from 10 VA to 3000 VA, wire wound servo potentiometers, current transformers rated up to 2000A, and high-power wirewound resistors and rheostats.
             </p>
             <p className="mb-4 text-muted-foreground leading-relaxed">
-              Our core values and vision is to deliver quality and durable products to our clients. Each and every unit manufactured by our company speaks quality and is subjected to vigorous checks that ensure durability. Our products pass international standards and are appropriate for commercial and personal uses.
+              ETCC supplies components to defence organisations including DRDO and BHEL, and our toroidal transformers have been qualified for programmes such as the Su-30MKI and Tejas LCA. We also serve industrial automation, medical equipment, audio electronics, and power distribution sectors across India.
             </p>
             <p className="mb-4 text-muted-foreground leading-relaxed">
-              With the growing technology, we have evolved to be a better company. We are regularly manufacturing products with our machines making our products more précised. Products are made with extensive care keeping the requirements in the market and also the need of particular product.
+              Every unit we manufacture undergoes in-house electrical testing — including dielectric strength, insulation resistance, turns ratio, and accuracy class verification. Our toroidal winding equipment allows us to achieve precise layer-wound coils with tight tolerances, and we work directly with customers to design components that meet specific voltage, power, frequency, and environmental requirements.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              Our team is highly experienced and technically sound thus they can overcome any given situation. They are capable of inventing new products to help the customers. We believe in satisfying our customers to the core so that we have a long-term professional relationship.
+              From single-unit prototypes to production runs of several thousand pieces, our engineering team handles the full design-to-delivery cycle. We maintain long-term relationships with OEMs, defence PSUs, and industrial customers who rely on consistent quality and responsive technical support.
             </p>
           </div>
         </div>
@@ -78,6 +92,18 @@ const AboutUs = () => {
 
       {/* Proprietor Section */}
       <section className="border-y border-border bg-secondary">
+        <div className="main-container section">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="mb-6">Leadership</h2>
+            <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-foreground mb-1">Mr. Rajan Naroor</h3>
+              <p className="text-sm text-primary font-medium mb-4">Founder &amp; Proprietor</p>
+              <p className="text-muted-foreground leading-relaxed">
+                Mr. Rajan Naroor founded Efficient Toroidal Coil Corporation in 1994 with a focus on precision electromagnetic component manufacturing. With over 30 years of hands-on experience in transformer design, winding technology, and quality assurance, he has built ETCC into a trusted supplier for India&apos;s defence sector and industrial OEMs. Under his leadership, ETCC has delivered components for programmes including the Su-30MKI and Tejas LCA, working closely with organisations such as DRDO and BHEL.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Contact & Location */}
@@ -93,8 +119,8 @@ const AboutUs = () => {
                   <MapPin className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Unit No. 11, Electronic Sadan No.-1,<br />
-                    M.I.D.C., Bhosari, Pune,<br />
-                    Pimpri-Chinchwad,<br />
+                    MIDC, Bhosari,<br />
+                    Pimpri-Chinchwad, Pune,<br />
                     Maharashtra 411026, India
                   </p>
                 </div>
@@ -111,8 +137,8 @@ const AboutUs = () => {
                       +91-2030689099
                     </a>
                     {" / "}
-                    <a href="tel:+91330620988" className="transition-colors hover:text-primary">
-                      330620988
+                    <a href="tel:+912030620988" className="transition-colors hover:text-primary">
+                      020-30620988
                     </a>
                   </div>
                 </div>
@@ -167,7 +193,7 @@ const AboutUs = () => {
             <div className="overflow-hidden rounded-xl border border-border shadow-sm">
               <iframe
                 title="ETCC Factory Location — MIDC Bhosari, Pune"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.0!2d73.8467!3d18.6298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b80e0b5e1d1d%3A0x0!2sElectronic+Sadan+1%2C+MIDC%2C+Bhosari%2C+Pune!5e0!3m2!1sen!2sin!4v1700000000000"
+                src="https://www.google.com/maps?q=Electronic+Sadan+No+1,+MIDC,+Bhosari,+Pimpri-Chinchwad,+Pune,+Maharashtra+411026&output=embed"
                 width="100%"
                 height="450"
                 style={{ border: 0 }}
@@ -184,6 +210,7 @@ const AboutUs = () => {
         </div>
       </section>
     </Layout>
+    </>
   );
 };
 

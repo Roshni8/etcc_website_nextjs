@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Zap, Gauge, Activity, Wrench, ArrowRight, ChevronLeft, ChevronRight, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
 import ProductCard from "@/components/ProductCard";
-import QuoteModal from "@/components/QuoteModal";
+
+const QuoteModal = dynamic(() => import("@/components/QuoteModal"), { ssr: false });
 
 const slides = [
   {
@@ -69,6 +71,9 @@ const Index = () => {
                 alt={slide.title}
                 className="h-full w-full object-cover object-center"
                 loading={index === 0 ? "eager" : "lazy"}
+                {...(index === 0 ? { fetchPriority: "high" as const } : {})}
+                width={1200}
+                height={540}
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-stone-900/30 to-transparent" />
@@ -80,8 +85,11 @@ const Index = () => {
           <div className="main-container">
             <div className="max-w-xl">
               <h1 className="mb-2 font-heading text-2xl font-bold text-stone-50 md:text-3xl lg:text-4xl">
-                {slides[currentSlide].title}
+                Precision Electromagnetic Components — ETCC India
               </h1>
+              <p className="mb-1 text-lg font-semibold text-stone-100">
+                {slides[currentSlide].title}
+              </p>
               <p className="mb-5 text-sm leading-relaxed text-white/80 md:text-base max-w-lg">
                 {slides[currentSlide].subtitle}
               </p>
@@ -214,6 +222,8 @@ const Index = () => {
                     alt="Transformer designed for Su-30MKI programme"
                     className="w-full h-auto max-h-[280px] object-contain"
                     loading="lazy"
+                    width={400}
+                    height={280}
                   />
                 </div>
                 <div className="overflow-hidden rounded-2xl border border-stone-50/10 shadow-2xl bg-stone-50/5 backdrop-blur-sm p-4 flex items-center justify-center">
@@ -222,6 +232,8 @@ const Index = () => {
                     alt="Transformer designed for Tejas LCA programme"
                     className="w-full h-auto max-h-[280px] object-contain"
                     loading="lazy"
+                    width={400}
+                    height={280}
                   />
                 </div>
               </div>
