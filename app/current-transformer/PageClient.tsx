@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
-import Breadcrumb from "@/components/Breadcrumb";
 import SpecificationTable from "@/components/SpecificationTable";
 import QuoteModal from "@/components/QuoteModal";
 
@@ -38,7 +37,7 @@ const customFeatures = [
 const applicationCards = [
   { title: "Energy Metering", desc: "Precision current measurement for energy billing, revenue metering, and power consumption monitoring in utilities.", image: "/assets/app-industrial.jpg", tags: ["Revenue", "Billing"] },
   { title: "Protective Relaying", desc: "Reliable fault detection for overcurrent, earth fault, and differential protection in substations and switchgear.", image: "/assets/app-defence.jpg", tags: ["Protection", "Relay"] },
-  { title: "Power Quality", desc: "Current sensing for harmonic analysis, power factor monitoring, and power quality assessment in industrial plants.", image: "/assets/app-audio.jpg", tags: ["Harmonics", "PF"] },
+  { title: "Power Quality", desc: "Current sensing for harmonic analysis, power factor monitoring, and power quality assessment in industrial plants.", image: "/assets/app-industrial.jpg", tags: ["Harmonics", "PF"] },
   { title: "Industrial Automation", desc: "Motor protection, variable frequency drive feedback, and process control current monitoring in factory automation.", image: "/assets/app-medical.jpg", tags: ["Motors", "VFD"] },
 ];
 
@@ -49,14 +48,15 @@ const CurrentTransformers = () => {
     <Layout>
       {/* Hero */}
       <section className="relative border-b border-border overflow-hidden">
-        <img src="/assets/ct-hero-bg.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" />
+        <img src="/assets/ct-hero-bg.jpg" alt="" aria-hidden="true" width={1920} height={600} className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" />
         <div className="absolute inset-0 bg-background/40" />
         <div className="main-container py-10 md:py-14 relative z-10">
-          <Breadcrumb items={[{ label: "Products", href: "/" }, { label: "Current Transformers" }]} />
-          <h1 className="mb-4 font-heading">Current Transformers</h1>
+<h1 className="mb-4 font-heading">Current Transformers</h1>
           <p className="max-w-2xl text-muted-foreground">
-            Precision current transformers for metering, protection, and power quality monitoring.
-            Designed for accuracy and reliability in power distribution systems.
+            ETCC India manufactures precision LT current transformers at our Pune facility, established
+            in 1994. Primary current range 50A to 2000A with 5A secondary output, metering accuracy
+            class 0.5 and protection class 1.0 per IEC 61869-2 / IS 2705. Window, wound, bar-type,
+            and split-core configurations available.
           </p>
         </div>
       </section>
@@ -65,7 +65,7 @@ const CurrentTransformers = () => {
       <section className="main-container section">
         <div className="flex justify-center">
           <div className="overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card flex items-center justify-center max-w-2xl w-full">
-            <img src="/assets/current-transformer-range.png" alt="Range of current transformers – window, wound, and toroidal types" className="w-full max-h-[420px] object-contain" loading="lazy" />
+            <img src="/assets/current-transformer-range.jpg" alt="Range of current transformers – window, wound, and toroidal types" width={800} height={420} className="w-full max-h-[420px] object-contain" loading="lazy" />
           </div>
         </div>
       </section>
@@ -105,7 +105,7 @@ const CurrentTransformers = () => {
               </Button>
             </div>
             <div className="overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card flex items-center justify-center">
-              <img src="/assets/flexible-current-transformer.png" alt="Flexible current transformer for custom installations" className="w-full max-h-[360px] object-contain" loading="lazy" />
+              <img src="/assets/flexible-current-transformer.jpg" alt="Flexible current transformer and Rogowski coil" width={600} height={360} className="w-full max-h-[360px] object-contain" loading="lazy" />
             </div>
           </div>
         </div>
@@ -115,13 +115,13 @@ const CurrentTransformers = () => {
       <section className="main-container section">
         <div className="mb-8">
           <h2 className="mb-3">Applications</h2>
-          <p className="text-muted-foreground">Our current transformers serve critical roles across power and industrial sectors.</p>
+          <p className="text-muted-foreground">Our current transformers serve critical roles across power and industrial sectors, designed and tested to IEC 61869-2 and IS 2705 standards.</p>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {applicationCards.map((app) => (
             <div key={app.title} className="group overflow-hidden rounded-xl border border-border bg-card">
               <div className="relative h-48 overflow-hidden">
-                <img src={app.image} alt={app.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={app.image} alt={app.title} width={400} height={192} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 <div className="absolute bottom-3 left-3 flex gap-2">
                   {app.tags.map((tag) => (
                     <span key={tag} className="rounded-full bg-background/90 px-3 py-1 text-xs font-medium text-foreground backdrop-blur-sm">{tag}</span>

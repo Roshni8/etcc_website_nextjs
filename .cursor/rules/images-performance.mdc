@@ -1,0 +1,46 @@
+---
+description: USE WHEN adding or modifying images. Image optimization and performance rules.
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# Images and Performance
+
+Full reference: [design-standards.md](mdc:docs/design-standards.md) section 5.
+
+## Every Image Must Have
+
+- `width` and `height` attributes (prevents CLS layout shift)
+- `alt` text (descriptive for content images, empty for decorative)
+
+```tsx
+// BAD — missing dimensions and alt
+<img src="/assets/product.jpg" />
+
+// GOOD
+<img
+  src="/assets/product.jpg"
+  width={800}
+  height={420}
+  alt="Range of toroidal transformers in various sizes"
+/>
+```
+
+## Loading Strategy
+
+| Position | `loading` | `fetchPriority` |
+|----------|-----------|-----------------|
+| Above fold (hero, first section) | omit (eager) | `"high"` |
+| Below fold | `"lazy"` | omit |
+| Decorative/background | `"lazy"` | omit |
+
+## File Size and Format
+
+- Maximum 200KB per image. Current 4-7MB JPGs must be compressed.
+- Prefer WebP for photographs, SVG for logos and icons.
+- Never commit uncompressed originals to the repo.
+
+## Bundle Size
+
+- Heavy client components: `dynamic(() => import(...), { ssr: false })`.
+- No large library imports in server components.

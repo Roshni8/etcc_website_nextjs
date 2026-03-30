@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
-import Breadcrumb from "@/components/Breadcrumb";
 import SpecificationTable from "@/components/SpecificationTable";
 import QuoteModal from "@/components/QuoteModal";
 
@@ -52,9 +51,9 @@ const customFeatures = [
 
 const applications = [
   { title: "Motor Speed Control", desc: "Variable resistance for DC motor regulation and speed control systems.", img: "/assets/app-industrial.jpg", tags: ["Rheostats", "Variable"] },
-  { title: "Load Testing", desc: "Resistive loads for generator, UPS, and power supply testing.", img: "/assets/app-defence.jpg", tags: ["High Power", "Load Banks"] },
-  { title: "Power Electronics", desc: "Snubber, braking, and discharge resistors for power conversion.", img: "/assets/app-medical.jpg", tags: ["Snubber", "Braking"] },
-  { title: "Laboratory & Heating", desc: "Precision adjustable standards and industrial heating elements.", img: "/assets/app-audio.jpg", tags: ["Precision", "Industrial"] },
+  { title: "Load Testing", desc: "Resistive loads for generator, UPS, and power supply testing.", img: "/assets/app-industrial.jpg", tags: ["High Power", "Load Banks"] },
+  { title: "Power Electronics", desc: "Snubber, braking, and discharge resistors for power conversion.", img: "/assets/app-defence.jpg", tags: ["Snubber", "Braking"] },
+  { title: "Laboratory & Heating", desc: "Precision adjustable standards and industrial heating elements.", img: "/assets/app-medical.jpg", tags: ["Precision", "Industrial"] },
 ];
 
 const WirewoundResistors = () => {
@@ -64,14 +63,15 @@ const WirewoundResistors = () => {
     <Layout>
       {/* Hero */}
       <section className="relative border-b border-border">
-        <img src="/assets/resistor-hero-bg.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" aria-hidden />
+        <img src="/assets/resistor-hero-bg.jpg" alt="" width={1920} height={600} className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" aria-hidden />
         <div className="absolute inset-0 bg-background/40" />
         <div className="main-container relative z-10 py-10 md:py-14">
-          <Breadcrumb items={[{ label: "Products", href: "/" }, { label: "Wire Wound Resistors & Rheostats" }]} />
-          <h1 className="mb-4 font-heading">Wire Wound Resistors &amp; Rheostats</h1>
+<h1 className="mb-4 font-heading">Wire Wound Resistors &amp; Rheostats</h1>
           <p className="max-w-2xl text-muted-foreground">
-            High-power wire wound resistors and rheostats for industrial, testing, and power electronics applications.
-            Built for reliability in demanding environments.
+            ETCC India manufactures high-power wire wound resistors from 5W to 200W and rheostats
+            from 25W to 500W at our Pune facility, established in 1994. Ceramic-tube, ceramic-body,
+            and aluminium-housed constructions for power electronics, motor control, load testing,
+            and industrial applications.
           </p>
         </div>
       </section>
@@ -80,7 +80,7 @@ const WirewoundResistors = () => {
       <section className="main-container section">
         <div className="flex justify-center">
           <div className="overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card flex items-center justify-center max-w-2xl w-full">
-            <img src="/assets/resistors-assorted.png" alt="Assorted wire wound resistors and rheostats" className="w-full max-h-[420px] object-contain" loading="lazy" />
+            <img src="/assets/resistors-range.jpg" alt="Assorted wire wound resistors and rheostats" width={800} height={420} className="w-full max-h-[420px] object-contain" loading="lazy" />
           </div>
         </div>
       </section>
@@ -132,7 +132,7 @@ const WirewoundResistors = () => {
             </Button>
           </div>
           <div className="overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card flex items-center justify-center">
-            <img src="/assets/resistors-assorted.png" alt="Custom wire wound resistors range" className="w-full max-h-[360px] object-contain" loading="lazy" />
+            <img src="/assets/resistors-range.jpg" alt="Custom wire wound resistors range" width={600} height={360} className="w-full max-h-[360px] object-contain" loading="lazy" />
           </div>
         </div>
       </section>
@@ -143,13 +143,13 @@ const WirewoundResistors = () => {
           <div className="mb-8">
             <h2 className="mb-3">Applications</h2>
             <p className="text-muted-foreground">
-              Our wire wound resistors and rheostats serve critical roles across demanding industries.
+              Our wire wound resistors and rheostats serve critical roles across demanding industries, manufactured to IS 12063 standards.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {applications.map((app) => (
               <div key={app.title} className="group relative overflow-hidden rounded-2xl border border-border shadow-card">
-                <img src={app.img} alt={app.title} className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={app.img} alt={app.title} width={400} height={192} className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
                 <div className="absolute bottom-0 p-4">
                   <div className="mb-2 flex flex-wrap gap-1.5">

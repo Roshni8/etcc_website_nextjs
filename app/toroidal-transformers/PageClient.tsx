@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ArrowRight, Waves, Thermometer, Ruler, Target, ShieldCheck, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
-import Breadcrumb from "@/components/Breadcrumb";
 import SpecificationTable from "@/components/SpecificationTable";
 import QuoteModal from "@/components/QuoteModal";
 
@@ -66,15 +65,15 @@ const ToroidalTransformers = () => {
     <Layout>
       {/* Page Header */}
       <section className="relative border-b border-border overflow-hidden">
-        <img src="/assets/toroidal-hero-bg.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" />
+        <img src="/assets/toroidal-hero-bg.jpg" alt="" aria-hidden="true" width={1920} height={600} className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" />
         <div className="absolute inset-0 bg-background/40" />
         <div className="main-container py-10 md:py-14 relative z-10">
-          <Breadcrumb items={[{ label: "Products", href: "/" }, { label: "Toroidal Transformers" }]} />
-          <h1 className="mb-4 font-heading">Toroidal Transformers</h1>
+<h1 className="mb-4 font-heading">Toroidal Transformers</h1>
           <p className="max-w-2xl text-muted-foreground">
-            Our toroidal transformers offer superior performance with lower electromagnetic interference,
-            smaller size, lighter weight, and higher efficiency compared to conventional laminated transformers.
-            Available in standard and custom configurations from 10 VA to 3000 VA.
+            ETCC India manufactures custom toroidal power transformers from 10 VA to 3000 VA at our
+            Pune facility, established in 1994. Our toroidal designs deliver lower electromagnetic
+            interference, 50% smaller footprint, and higher efficiency than conventional EI-core
+            laminated transformers — built to IEC 61558 and IS 2026 standards.
           </p>
         </div>
       </section>
@@ -83,10 +82,10 @@ const ToroidalTransformers = () => {
       <section className="main-container section">
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card flex items-center justify-center">
-            <img src="/assets/toroidal-custom.png" alt="Custom toroidal transformer with connector terminals" className="w-full max-h-[360px] object-contain" />
+            <img src="/assets/toroidal-single.jpg" alt="Custom toroidal transformer with connector terminals" width={600} height={360} className="w-full max-h-[360px] object-contain" />
           </div>
           <div className="overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card flex items-center justify-center">
-            <img src="/assets/toroidal-assorted.png" alt="Range of toroidal transformers and electromagnetic components" className="w-full max-h-[360px] object-contain" />
+            <img src="/assets/toroidal-assorted.jpg" alt="Range of toroidal transformers and electromagnetic components" width={600} height={360} className="w-full max-h-[360px] object-contain" />
           </div>
         </div>
       </section>
@@ -96,7 +95,7 @@ const ToroidalTransformers = () => {
         <div className="mb-8">
           <h2 className="mb-3">Standard Toroidal Transformers</h2>
           <p className="text-muted-foreground">
-            Our standard range covers 10 VA to 3000 VA with 0–230V AC primary voltage. All units meet international safety standards.
+            Our standard range covers 10 VA to 3000 VA with 0–230V AC primary voltage. All units are designed and tested to IEC 61558 and IS 2026 safety standards.
           </p>
         </div>
         <SpecificationTable columns={columns} data={specData} caption="Standard toroidal transformer specifications" collapsedRows={8} />
@@ -142,13 +141,17 @@ const ToroidalTransformers = () => {
       <section className="main-container section">
         <div className="mb-8">
           <h2 className="mb-3">Applications</h2>
-          <p className="text-muted-foreground">Our toroidal transformers serve critical roles across diverse industries.</p>
+          <p className="text-muted-foreground">
+            Our toroidal transformers serve critical roles across diverse industries. ETCC has supplied
+            custom transformers for programmes including the Su-30MKI avionics upgrade and Tejas LCA
+            ground support equipment, alongside commercial audio, medical, and industrial applications.
+          </p>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {applicationCards.map((app) => (
             <div key={app.title} className="group overflow-hidden rounded-xl border border-border bg-card">
               <div className="relative h-48 overflow-hidden">
-                <img src={app.image} alt={app.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={app.image} alt={app.title} width={400} height={192} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 <div className="absolute bottom-3 left-3 flex gap-2">
                   {app.tags.map((tag) => (
                     <span key={tag} className="rounded-full bg-background/90 px-3 py-1 text-xs font-medium text-foreground backdrop-blur-sm">{tag}</span>

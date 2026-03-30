@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" fill="currentColor">
+  <!-- Fighter Jet (top right) -->
+  <g transform="translate(750, 80) scale(1.1)" opacity="0.6">
+    <path d="M0,40 L30,35 L60,20 L90,15 L120,10 L150,8 L180,5 L200,3 L220,2 L240,2 L260,5 L270,15 L265,25 L250,30 L220,32 L200,34 L180,36 L170,50 L200,70 L210,85 L195,85 L170,70 L150,58 L130,50 L110,46 L90,44 L70,43 L50,42 L30,42 L10,42 L0,40Z"/>
+    <path d="M100,20 L120,5 L140,0 L145,5 L130,15 L110,22Z"/>
+    <path d="M60,42 L70,55 L90,65 L85,68 L60,60 L45,48Z"/>
+  </g>
+
+  <!-- Second Fighter Jet (top center) -->
+  <g transform="translate(350, 50) scale(0.9) rotate(-5)" opacity="0.4">
+    <path d="M0,40 L30,35 L60,20 L90,15 L120,10 L150,8 L180,5 L200,3 L220,2 L240,2 L260,5 L270,15 L265,25 L250,30 L220,32 L200,34 L180,36 L170,50 L200,70 L210,85 L195,85 L170,70 L150,58 L130,50 L110,46 L90,44 L70,43 L50,42 L30,42 L10,42 L0,40Z"/>
+    <path d="M100,20 L120,5 L140,0 L145,5 L130,15 L110,22Z"/>
+    <path d="M60,42 L70,55 L90,65 L85,68 L60,60 L45,48Z"/>
+  </g>
+
+  <!-- Tank (bottom left) -->
+  <g transform="translate(50, 350) scale(1.2)" opacity="0.5">
+    <!-- Hull -->
+    <path d="M20,60 L40,30 L80,20 L100,15 L110,10 L180,10 L200,15 L210,25 L220,40 L230,50 L230,65 L220,75 L20,75 L10,70 L20,60Z"/>
+    <!-- Turret -->
+    <path d="M90,20 L95,5 L100,0 L200,-5 L205,0 L200,5 L110,15Z"/>
+    <!-- Tracks -->
+    <path d="M15,75 L10,85 L15,95 L30,100 L210,100 L225,95 L230,85 L225,75Z"/>
+    <circle cx="30" cy="88" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="60" cy="88" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="90" cy="88" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="120" cy="88" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="150" cy="88" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="180" cy="88" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="210" cy="88" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+  </g>
+
+  <!-- Naval Ship (bottom right) -->
+  <g transform="translate(650, 380) scale(1.3)" opacity="0.45">
+    <!-- Hull -->
+    <path d="M0,50 L30,30 L50,25 L80,20 L120,18 L180,18 L220,20 L260,25 L300,35 L320,45 L330,55 L320,65 L10,65 L0,55Z"/>
+    <!-- Superstructure -->
+    <path d="M100,18 L105,5 L120,0 L180,0 L200,5 L205,18Z"/>
+    <!-- Bridge -->
+    <path d="M130,0 L135,-15 L145,-20 L155,-20 L165,-15 L170,0Z"/>
+    <!-- Mast -->
+    <path d="M148,-20 L150,-45 L152,-20Z"/>
+    <!-- Antenna -->
+    <path d="M140,-40 L150,-45 L160,-40" fill="none" stroke="currentColor" stroke-width="2"/>
+    <!-- Funnel -->
+    <path d="M200,0 L205,-12 L215,-12 L220,0Z"/>
+  </g>
+
+  <!-- Missile (center) -->
+  <g transform="translate(100, 220) rotate(-15) scale(1)" opacity="0.35">
+    <path d="M0,8 L10,5 L30,3 L120,2 L150,1 L170,0 L180,2 L180,14 L170,16 L150,15 L120,14 L30,13 L10,11 L0,8Z"/>
+    <!-- Fins -->
+    <path d="M5,5 L0,0 L15,3Z"/>
+    <path d="M5,11 L0,16 L15,13Z"/>
+    <path d="M170,2 L175,-5 L178,1Z"/>
+    <path d="M170,14 L175,21 L178,15Z"/>
+  </g>
+
+  <!-- Another tank silhouette (center right, smaller) -->
+  <g transform="translate(500, 300) scale(0.7) rotate(5)" opacity="0.3">
+    <path d="M20,60 L40,30 L80,20 L100,15 L110,10 L180,10 L200,15 L210,25 L220,40 L230,50 L230,65 L220,75 L20,75 L10,70 L20,60Z"/>
+    <path d="M90,20 L95,5 L100,0 L200,-5 L205,0 L200,5 L110,15Z"/>
+    <path d="M15,75 L10,85 L15,95 L30,100 L210,100 L225,95 L230,85 L225,75Z"/>
+  </g>
+</svg>

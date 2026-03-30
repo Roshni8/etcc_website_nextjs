@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { MapPin, Phone, Mail, Smartphone } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
   title: { absolute: "About ETCC India — Precision Component Manufacturer Since 1994" },
@@ -24,9 +23,7 @@ export const metadata: Metadata = {
 const AboutUs = () => {
   return (
     <Layout>
-      <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About Us" }]} />
-
-      {/* Page Header */}
+{/* Page Header */}
       <section className="relative bg-secondary overflow-hidden">
         <img src="/assets/about-factory-team.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" style={{ objectPosition: "center 20%" }} />
         <div className="absolute inset-0 bg-background/40" />

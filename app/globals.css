@@ -2,162 +2,207 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================
-   ETCC MANUFACTURING DESIGN SYSTEM
+/* ═══════════════════════════════════════════════
+   ETCC Design System
    Efficient Toroidal Coil Corporation
-   ============================================ */
+   See docs/design-standards.md for usage guide
+   ═══════════════════════════════════════════════ */
 
-/* ============================================
-   1. FONT DECLARATIONS
-   ============================================ */
 
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
+/* ───────────────────────────────────────────────
+   1. FONTS
+   Inter: loaded via next/font in layout.tsx
+   Cooper: local font, fallback to Georgia
+   ─────────────────────────────────────────────── */
 
 @font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'CooperLtBT';
+  font-family: "CooperLtBT";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Cooper Lt BT'), local('CooperLtBT');
+  src: local("Cooper Lt BT"), local("CooperLtBT");
 }
 
-/* ============================================
-   2. DESIGN TOKENS
-   ============================================ */
+
+/* ───────────────────────────────────────────────
+   2. COLOR TOKENS — Light Mode
+
+   Every HSL value has its closest Tailwind color
+   noted so you know what you're looking at.
+   To change a color: update the HSL here, the
+   whole site updates automatically.
+   ─────────────────────────────────────────────── */
 
 @layer base {
   :root {
-    /* Font Families */
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    --font-heading: 'CooperLtBT', Georgia, 'Times New Roman', serif;
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+    --font-heading: "CooperLtBT", Georgia, "Times New Roman", serif;
 
-    /* ETCC Brand Colors (HSL) */
-    --etcc-primary: 213 90% 42%;
-    --etcc-primary-light: 213 85% 55%;
-    --etcc-primary-dark: 213 92% 32%;
+    /*
+     * BRAND COLORS — ETCC Blue
+     * These are custom — not from Tailwind's palette.
+     * Use via: bg-primary, text-primary, bg-primary-dark, etc.
+     */
+    --etcc-primary: 213 90% 42%;       /* ≈ blue-700  — main brand blue       */
+    --etcc-primary-light: 213 85% 55%; /* ≈ blue-500  — lighter blue, accents  */
+    --etcc-primary-dark: 213 92% 32%;  /* ≈ blue-900  — hover states, emphasis */
 
-    /* Backgrounds — Stone palette */
-    --etcc-bg-light: 20 14% 98%;
-    --etcc-bg-neutral: 20 6% 96%;
-    --etcc-bg-dark: 20 14% 10%;
+    /*
+     * SURFACE COLORS
+     * Use via: bg-background, bg-card, bg-secondary, etc.
+     */
+    --background: 20 14% 98%;          /* ≈ stone-50  — page background        */
+    --foreground: 20 14% 10%;          /* ≈ stone-900 — primary text            */
+    --card: 0 0% 100%;                 /*   white     — card surfaces           */
+    --card-foreground: 20 14% 10%;     /* ≈ stone-900 — text on cards           */
+    --popover: 0 0% 100%;              /*   white     — dropdown backgrounds    */
+    --popover-foreground: 20 14% 10%;  /* ≈ stone-900 — text in dropdowns       */
+    --secondary: 20 6% 96%;            /* ≈ stone-100 — alternating section bg  */
+    --secondary-foreground: 20 14% 10%;/* ≈ stone-900 — text on secondary bg    */
+    --muted: 20 6% 96%;                /* ≈ stone-100 — subtle backgrounds      */
+    --muted-foreground: 25 6% 45%;     /* ≈ stone-500 — descriptions, subtitles */
+    --accent: 213 85% 55%;             /* ≈ blue-500  — highlighted elements    */
+    --accent-foreground: 0 0% 100%;    /*   white     — text on accent bg       */
 
-    /* Text Colors — Stone palette */
-    --etcc-text-primary: 20 14% 10%;
-    --etcc-text-secondary: 25 6% 45%;
-    --etcc-text-muted: 24 6% 64%;
+    /*
+     * SEMANTIC COLORS
+     * Use via: bg-primary, text-destructive, etc.
+     */
+    --primary: 213 90% 42%;            /* ≈ blue-700  — CTAs, links, active     */
+    --primary-foreground: 0 0% 100%;   /*   white     — text on primary bg      */
+    --destructive: 0 84% 60%;          /* ≈ red-500   — errors, delete actions  */
+    --destructive-foreground: 0 0% 100%;/*  white     — text on destructive bg  */
 
-    /* Shadcn Semantic Tokens — Stone palette */
-    --background: 20 14% 98%;
-    --foreground: 20 14% 10%;
+    /*
+     * CONTROLS
+     * Use via: border-border, border-input, ring-ring
+     */
+    --border: 24 6% 90%;               /* ≈ stone-200 — all borders & dividers  */
+    --input: 24 6% 90%;                /* ≈ stone-200 — form field borders      */
+    --ring: 213 90% 42%;               /* ≈ blue-700  — focus ring color        */
+    --radius: 0.5rem;                  /*   8px       — base border radius      */
 
-    --card: 0 0% 100%;
-    --card-foreground: 20 14% 10%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 14% 10%;
-
-    --primary: 213 90% 42%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 20 6% 96%;
-    --secondary-foreground: 20 14% 10%;
-
-    --muted: 20 6% 96%;
-    --muted-foreground: 25 6% 45%;
-
-    --accent: 213 85% 55%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 24 6% 90%;
-    --input: 24 6% 90%;
-    --ring: 213 90% 42%;
-
-    --radius: 0.5rem;
-
-    /* Sidebar (not used but required) */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 213 90% 42%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 213 90% 42%;
-
-    /* Shadows */
+    /*
+     * ELEVATION (shadows)
+     * Use via: shadow-card, shadow-card-hover, shadow-elevated, shadow-hero
+     */
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.06);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
 
-    /* Transitions */
+    /*
+     * MOTION (transition durations)
+     * Use via: var(--transition-fast) in inline styles
+     */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+
+  /* ─────────────────────────────────────────────
+     3. COLOR TOKENS — Dark Mode
+     Same tokens, darker values. Auto-applied
+     when <html class="dark">.
+     ───────────────────────────────────────────── */
+
   .dark {
-    --background: 20 14% 10%;
-    --foreground: 20 14% 98%;
-    --card: 20 14% 14%;
-    --card-foreground: 20 14% 98%;
-    --popover: 20 14% 14%;
-    --popover-foreground: 20 14% 98%;
-    --primary: 213 85% 55%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 12 6% 15%;
-    --secondary-foreground: 20 14% 98%;
-    --muted: 12 6% 15%;
-    --muted-foreground: 24 6% 64%;
-    --accent: 213 85% 55%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 12 6% 22%;
-    --input: 12 6% 22%;
-    --ring: 213 85% 55%;
-    --sidebar-background: 20 14% 10%;
-    --sidebar-foreground: 20 14% 98%;
-    --sidebar-primary: 213 85% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 12 6% 18%;
-    --sidebar-accent-foreground: 20 14% 98%;
-    --sidebar-border: 12 6% 22%;
-    --sidebar-ring: 213 85% 55%;
+    --etcc-primary: 213 85% 55%;       /* ≈ blue-500  — lighter for dark bg     */
+    --etcc-primary-light: 213 80% 65%; /* ≈ blue-400  — accents on dark bg      */
+    --etcc-primary-dark: 213 90% 42%;  /* ≈ blue-700  — emphasis on dark bg     */
+
+    --background: 20 14% 10%;          /* ≈ stone-900 — dark page background    */
+    --foreground: 20 14% 98%;          /* ≈ stone-50  — light text on dark      */
+    --card: 20 14% 14%;                /* ≈ stone-850 — dark card surface       */
+    --card-foreground: 20 14% 98%;     /* ≈ stone-50                            */
+    --popover: 20 14% 14%;             /* ≈ stone-850                           */
+    --popover-foreground: 20 14% 98%;  /* ≈ stone-50                            */
+    --secondary: 12 6% 15%;            /* ≈ stone-800                           */
+    --secondary-foreground: 20 14% 98%;/* ≈ stone-50                            */
+    --muted: 12 6% 15%;                /* ≈ stone-800                           */
+    --muted-foreground: 24 6% 64%;     /* ≈ stone-400                           */
+    --accent: 213 85% 55%;             /* ≈ blue-500                            */
+    --accent-foreground: 0 0% 100%;    /*   white                               */
+
+    --primary: 213 85% 55%;            /* ≈ blue-500                            */
+    --primary-foreground: 0 0% 100%;   /*   white                               */
+    --destructive: 0 62.8% 30.6%;      /* ≈ red-900                            */
+    --destructive-foreground: 0 0% 100%;/*  white                               */
+
+    --border: 12 6% 22%;               /* ≈ stone-700                           */
+    --input: 12 6% 22%;                /* ≈ stone-700                           */
+    --ring: 213 85% 55%;               /* ≈ blue-500                            */
   }
 }
 
-/* ============================================
-   3. BASE STYLES
-   ============================================ */
+
+/* ───────────────────────────────────────────────
+   4. SPACING REFERENCE
+   Tailwind classes → pixel values.
+   Pick from this list — don't invent new values.
+
+   Name      Class    Pixels   Use for
+   ───────── ──────── ──────── ─────────────────────────────
+   2xs       p-0.5    2px      Badge vertical padding
+   xs        p-1      4px      Tight gaps (title→subtitle in cards)
+   sm        p-2      8px      Icon↔text gap, inline spacing
+   md        p-3      12px     Eyebrow→heading, badge↔label
+   base      p-4      16px     Card padding, heading→description
+   lg        p-5      20px     Rich card padding
+   xl        p-6      24px     Page side padding (px-6), gaps
+   2xl       p-8      32px     CTA button padding, section↔content (tight)
+   3xl       p-10     40px     Grid gaps (footer, two-col)
+   4xl       p-14     56px     Title block → content below it
+   5xl       p-16     64px     Section padding mobile
+   6xl       p-20     80px     Section padding mobile (standard)
+   7xl       p-32     128px    Section padding desktop (standard)
+
+   Standard combos:
+   • Section:           py-20 md:py-32  (80px → 128px)
+   • Product section:   py-16 md:py-20  (64px → 80px)
+   • Footer:            py-12 md:py-16  (48px → 64px)
+   • Title → content:   mt-14           (56px)
+   • Heading → subtitle:mt-4            (16px)
+   • Cards in grid:     gap-5           (20px)
+   • Icon + text:       gap-2           (8px)
+   ─────────────────────────────────────────────── */
+
+
+/* ───────────────────────────────────────────────
+   5. FONT SIZE REFERENCE
+   Tailwind classes → pixel values.
+   Pick from this list — don't invent new values.
+
+   Name      Class      Pixels   Line-H   Use for
+   ───────── ────────── ──────── ──────── ────────────────────────
+   2xs       text-[10px] 10px    1.4      Tiny labels (category tags)
+   xs        text-[11px] 11px    1.4      Captions (client product name)
+   sm        text-xs     12px    1.5      Tags, badges, small meta
+   base-sm   text-sm     14px    1.5      Nav links, footer text, form labels
+   base      text-base   16px    1.5      Body text (default)
+   lg        text-lg     18px    1.75     Subtitles, intro paragraphs
+   xl        text-xl     20px    1.75     Large subtitles
+   2xl       text-2xl    24px    1.33     —
+   3xl       text-3xl    30px    1.33     Stats numbers mobile
+   4xl       text-4xl    36px    1.2      Section h2 mobile
+   5xl       text-5xl    48px    1.1      Hero h1 mobile
+   6xl       text-6xl    60px    1.1      —
+   7xl       text-7xl    72px    1.1      Hero h1 desktop
+
+   Standard combos:
+   • Hero h1:         text-5xl md:text-7xl font-bold tracking-tighter
+   • Section h2:      text-4xl md:text-5xl font-bold tracking-tighter
+   • Card title:      text-base font-semibold
+   • Subtitle:        text-lg text-muted-foreground
+   • Caption:         text-[11px] font-semibold uppercase tracking-wider
+   • Footer heading:  text-sm font-semibold
+   ─────────────────────────────────────────────── */
+
+
+/* ───────────────────────────────────────────────
+   6. BASE STYLES
+   ─────────────────────────────────────────────── */
 
 @layer base {
   * {
@@ -175,14 +220,22 @@
     font-family: var(--font-sans);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  /* h1 uses Cooper (brand heading font), h2–h6 use Inter (UI font) */
+  h1 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.2;
+    font-size: clamp(2rem, 4vw, 3rem);
+    @apply text-foreground;
+  }
+
+  h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
     font-weight: 600;
     line-height: 1.2;
     @apply text-foreground;
   }
 
-  h1 { font-size: clamp(2rem, 4vw, 3rem); }
   h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); }
   h3 { font-size: clamp(1.375rem, 2.5vw, 1.875rem); }
   h4 { font-size: 1.5rem; }
@@ -190,45 +243,19 @@
   h6 { font-size: 1.125rem; }
 }
 
-/* ============================================
-   4. COMPONENT UTILITIES
-   ============================================ */
+
+/* ───────────────────────────────────────────────
+   7. LAYOUT UTILITIES
+   ─────────────────────────────────────────────── */
 
 @layer components {
   .main-container {
     width: 100%;
+    max-width: 72rem; /* 1152px = max-w-6xl */
     margin-left: auto;
     margin-right: auto;
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  @media (min-width: 640px) {
-    .main-container {
-      padding-left: 48px;
-      padding-right: 48px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .main-container {
-      padding-left: 80px;
-      padding-right: 80px;
-    }
-  }
-
-  @media (min-width: 1440px) {
-    .main-container {
-      padding-left: 128px;
-      padding-right: 128px;
-    }
-  }
-
-  @media (min-width: 1600px) {
-    .main-container {
-      padding-left: 212px;
-      padding-right: 212px;
-    }
+    padding-left: 1.5rem; /* 24px = px-6 */
+    padding-right: 1.5rem;
   }
 
   .section {
@@ -242,25 +269,22 @@
   }
 }
 
-/* ============================================
-   5. ANIMATIONS
-   ============================================ */
+
+/* ───────────────────────────────────────────────
+   8. ENTRANCE ANIMATIONS
+   Used by homepage sections for scroll-triggered reveals.
+   Apply with: animate-fade-in-up animation-delay-200
+   ─────────────────────────────────────────────── */
 
 @layer utilities {
   @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes fade-in {
     from { opacity: 0; }
-    to { opacity: 1; }
+    to   { opacity: 1; }
   }
 
   .animate-fade-in-up {
@@ -275,4 +299,39 @@
   .animation-delay-200 { animation-delay: 200ms; }
   .animation-delay-300 { animation-delay: 300ms; }
   .animation-delay-400 { animation-delay: 400ms; }
+}
+
+
+/* ───────────────────────────────────────────────
+   9. COMPONENT ANIMATIONS
+   Keyframes used by specific UI components.
+   ─────────────────────────────────────────────── */
+
+/* Hero badge — rotating conic-gradient border */
+@property --shiny-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes shiny-border-rotate {
+  0%   { --shiny-angle: 0deg; }
+  100% { --shiny-angle: 360deg; }
+}
+
+/* Skeleton loading shimmer */
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* Page loader */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+@keyframes loader-progress {
+  0%   { width: 0%;  margin-left: 0; }
+  50%  { width: 60%; margin-left: 20%; }
+  100% { width: 0%;  margin-left: 100%; }
 }

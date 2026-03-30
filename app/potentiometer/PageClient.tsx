@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ArrowRight, Waves, Thermometer, Ruler, Target, ShieldCheck, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
-import Breadcrumb from "@/components/Breadcrumb";
 import SpecificationTable from "@/components/SpecificationTable";
 import QuoteModal from "@/components/QuoteModal";
 
@@ -44,11 +43,11 @@ const customCards = [
 ];
 
 const productImages = [
-  { src: "/assets/servo-potentiometer.png", alt: "Servo Potentiometer – precision position feedback", label: "Servo Potentiometer" },
-  { src: "/assets/12-watt-potentiometer.png", alt: "12 Watt Wire Wound Potentiometer", label: "12W Potentiometer" },
-  { src: "/assets/1-watt-potentiometer.png", alt: "1 Watt Wire Wound Potentiometer", label: "1W Potentiometer" },
-  { src: "/assets/ganged-potentiometer.png", alt: "Ganged multi-gang potentiometer assembly", label: "Ganged Potentiometer" },
-  { src: "/assets/linear-potentiometer.png", alt: "Linear motion potentiometer ETC/SL/50", label: "Linear Potentiometer" },
+  { src: "/assets/servo-potentiometer.jpg", alt: "Servo Potentiometer – precision position feedback", label: "Servo Potentiometer" },
+  { src: "/assets/servo-potentiometer-closeup.jpg", alt: "Servo potentiometers close-up view", label: "Servo Potentiometers" },
+  { src: "/assets/small-potentiometer.jpg", alt: "Small wire wound potentiometer with wire leads", label: "Small Potentiometer" },
+  { src: "/assets/servo-potentiometer-range.jpg", alt: "Range of servo potentiometer models", label: "Potentiometer Range" },
+  { src: "/assets/linear-potentiometer-range.jpg", alt: "Linear motion potentiometers full range", label: "Linear Potentiometer" },
 ];
 
 const applicationCards = [
@@ -68,8 +67,7 @@ const Potentiometers = () => {
         <img src="/assets/potentiometer-hero-bg.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-[0.4]" />
         <div className="absolute inset-0 bg-background/40" />
         <div className="main-container py-10 md:py-14 relative z-10">
-          <Breadcrumb items={[{ label: "Products", href: "/" }, { label: "Wire Wound Potentiometers" }]} />
-          <h1 className="mb-4 font-heading">Wire Wound Potentiometers</h1>
+<h1 className="mb-4 font-heading">Wire Wound Potentiometers</h1>
           <p className="max-w-2xl text-muted-foreground">
             Precision wire wound potentiometers for industrial, instrumentation, servo, and defence
             applications. Available in servo, linear, ganged, and custom configurations.
