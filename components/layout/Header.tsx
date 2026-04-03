@@ -5,55 +5,24 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { productNavSections } from "@/lib/product-nav";
 
 const QuoteModal = dynamic(() => import("@/components/QuoteModal"), { ssr: false });
-
-/* ─── Dropdown Data ─── */
-
-interface DropdownItem {
-  title: string;
-  subtitle: string;
-  href: string;
-}
-
-interface DropdownSection {
-  label: string;
-  items: DropdownItem[];
-}
-
-const productSections: DropdownSection[] = [
-  {
-    label: "Transformers",
-    items: [
-      { title: "Toroidal Transformers", subtitle: "10VA–3000VA, 50Hz to 10kHz", href: "/toroidal-transformers" },
-      { title: "Current Transformers", subtitle: "50A–2000A, accuracy class 0.5", href: "/current-transformer" },
-    ],
-  },
-  {
-    label: "Potentiometers",
-    items: [
-      { title: "Linear Potentiometers", subtitle: "Precision slide-wire & linear motion types", href: "/potentiometer" },
-      { title: "Servo Potentiometers", subtitle: "±0.5% linearity, −55°C to +125°C", href: "/potentiometer" },
-    ],
-  },
-  {
-    label: "Resistive Components",
-    items: [
-      { title: "Wire Wound Resistors", subtitle: "5W–200W, ceramic & aluminium housed", href: "/wirewound-resistors" },
-      { title: "Rheostats", subtitle: "Rotary & slider types, 25W–500W", href: "/wirewound-resistors" },
-    ],
-  },
-];
-
-const allProductLinks = productSections.flatMap((s) => s.items);
 
 /* ─── Nav Items ─── */
 
 const navItems = [
   { label: "Products", hasDropdown: true },
-  { label: "Blogs", href: "/about-us" },
+  { label: "Blog", href: "/blog" },
   { label: "About Us", href: "/about-us" },
 ] as const;
+
+/** Desktop nav — same classes for Products, Blog, About Us: muted text, darker on hover + bg */
+const navDesktopItem =
+  "rounded-lg px-3 py-1.5 text-sm font-medium text-stone-500 transition-all duration-200 ease-out motion-reduce:transition-none hover:bg-stone-100 hover:text-stone-900";
+
+const navDesktopProductsButton =
+  "group inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent";
 
 /* ─── Header ─── */
 
@@ -101,7 +70,7 @@ const Header = () => {
           <div className="flex h-14 items-center justify-between">
             {/* Left: Logo */}
             <Link href="/" className="flex items-center gap-3 shrink-0">
-              <img src="/assets/etcc-logo-blue.svg" alt="ETCC Logo" className="h-11 w-auto" width="154" height="44" />
+              <img src="/assets/etcc-logo.svg" alt="ETCC Logo" className="h-11 w-auto" width="154" height="44" />
               <span className="hidden sm:block text-[14px] font-medium text-stone-900 leading-tight whitespace-nowrap">
                 Efficient Toroidal Coil Corporation
               </span>
@@ -111,10 +80,6 @@ const Header = () => {
             <div className="hidden lg:flex items-center gap-1">
               <nav className="flex items-center gap-0.5" aria-label="Main navigation">
                 {navItems.map((item) => {
-                  const isActive = "href" in item
-                    ? pathname === item.href
-                    : allProductLinks.some((d) => pathname === d.href);
-
                   if ("hasDropdown" in item) {
                     return (
                       <div
@@ -125,14 +90,17 @@ const Header = () => {
                       >
                         <button
                           ref={productsButtonRef}
-                          className={`flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-150 ${
-                            isActive || dropdownOpen ? "text-stone-700" : "text-stone-500 hover:text-stone-700"
-                          }`}
+                          type="button"
+                          className={`${navDesktopProductsButton} ${navDesktopItem}`}
                           aria-expanded={dropdownOpen}
                           aria-haspopup="true"
                         >
                           {item.label}
-                          <ChevronDown className={`h-3.5 w-3.5 text-stone-400 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+                          <ChevronDown
+                            className={`h-3.5 w-3.5 shrink-0 text-current transition-all duration-200 ease-out motion-reduce:transition-none ${
+                              dropdownOpen ? "rotate-180" : ""
+                            }`}
+                          />
                         </button>
 
                         {/* Dropdown — positioned directly under the Products button */}
@@ -175,7 +143,7 @@ const Header = () => {
                               }}
                             >
                               <div className="flex divide-x divide-stone-200/80 p-2">
-                                {productSections.map((section) => (
+                                {productNavSections.map((section) => (
                                   <div key={section.label} className="flex-1 p-2.5">
                                     <p className="px-3 pt-1.5 pb-2 text-[11px] font-semibold uppercase tracking-wider text-stone-400">
                                       {section.label}
@@ -212,13 +180,13 @@ const Header = () => {
                     );
                   }
 
+                  const linkActive = pathname === item.href;
                   return (
                     <Link
                       key={item.label}
                       href={item.href}
-                      className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-150 ${
-                        isActive ? "text-stone-700" : "text-stone-500 hover:text-stone-700"
-                      }`}
+                      className={navDesktopItem}
+                      aria-current={linkActive ? "page" : undefined}
                     >
                       {item.label}
                     </Link>
@@ -255,7 +223,7 @@ const Header = () => {
               <Link href="/" className="rounded-md px-3 py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50" onClick={() => setMobileOpen(false)}>
                 Home
               </Link>
-              {productSections.map((section) => (
+              {productNavSections.map((section) => (
                 <div key={section.label}>
                   <p className="px-3 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-stone-400">{section.label}</p>
                   {section.items.map((link) => (
@@ -266,6 +234,13 @@ const Header = () => {
                 </div>
               ))}
               <div className="my-2 border-t border-stone-100" />
+              <Link
+                href="/blog"
+                className="rounded-md px-3 py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50"
+                onClick={() => setMobileOpen(false)}
+              >
+                Blog
+              </Link>
               <Link href="/about-us" className="rounded-md px-3 py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50" onClick={() => setMobileOpen(false)}>About Us</Link>
               <button onClick={() => { setQuoteOpen(true); setMobileOpen(false); }} className="mt-3 w-full rounded-full py-2.5 text-sm font-medium text-white bg-stone-900 hover:bg-stone-800 transition-colors">
                 Get a Quote

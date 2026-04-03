@@ -319,6 +319,24 @@
   100% { --shiny-angle: 360deg; }
 }
 
+/* Rotating conic-gradient ring — hero “Trusted by…” badge, linear potentiometer CTA, etc. */
+.shiny-conic-border {
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--shiny-angle, 0deg),
+    #e2e8f0,
+    #a78bfa,
+    #f472b6,
+    #38bdf8,
+    #e2e8f0
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: shiny-border-rotate 6s linear infinite;
+}
+
 /* Skeleton loading shimmer */
 @keyframes shimmer {
   100% { transform: translateX(100%); }
@@ -334,4 +352,57 @@
   0%   { width: 0%;  margin-left: 0; }
   50%  { width: 60%; margin-left: 20%; }
   100% { width: 0%;  margin-left: 100%; }
+}
+
+/* ───────────────────────────────────────────────
+   10. BLOG TYPOGRAPHY
+   Serif body text for long-form reading.
+   Applied via .blog-article and .blog-body classes.
+   ─────────────────────────────────────────────── */
+
+.blog-article {
+  --blog-serif: "source-serif-pro", Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.blog-body {
+  font-family: var(--blog-serif);
+  font-size: 1rem;       /* 16px */
+  line-height: 1.75;
+}
+
+.blog-article p.blog-body {
+  margin-bottom: 1.25rem;
+}
+
+.blog-article h2 {
+  font-family: var(--font-sans);
+}
+
+.blog-article h3 {
+  font-family: var(--font-sans);
+}
+
+.blog-article ol {
+  font-family: var(--blog-serif);
+}
+
+@media (max-width: 640px) {
+  .blog-body {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+}
+
+
+/* ───────────────────────────────────────────────
+   REDUCED MOTION
+   Disables animations for users who request it
+   ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

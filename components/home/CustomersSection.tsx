@@ -4,87 +4,75 @@ import { motion } from "motion/react";
 import { Marquee } from "@/components/ui/marquee";
 
 /* ════════════════════════════════════════════
-   CLIENT DATA
+   CLIENT DATA — per-logo scale tuned to each logo's shape
+
+   scale guide (tell me adjustments like "make HAL bigger"):
+     HAL      → wide landscape (174×93)
+     BHEL     → nearly square (500×411)
+     ECIL     → slightly wide (278×214)
+     CWPRS    → slightly wide (982×798)
+     KSEB     → wide landscape (948×408)
+     Tata     → portrait/tall (284×338)
+     Forbes   → square (2048×2048)
+     Kirloskar → square SVG (211×198)
+     Labindia → avif
+     Scope    → landscape (300×200)
    ════════════════════════════════════════════ */
 
 interface Client {
   name: string;
-  initials: string;
-  product: string;
-  color: string;
   logo?: string;
+  initials?: string;
+  /** Tailwind scale class per logo — default "scale-100" */
+  zoom?: string;
 }
 
 const governmentClients: Client[] = [
-  { name: "Indian Air Force", initials: "IAF", product: "400 Hz Transformer", color: "#1a365d" },
-  { name: "Indian Navy", initials: "IN", product: "400 Hz Transformer", color: "#1e3a5f" },
-  { name: "HAL", initials: "HAL", product: "400 Hz Transformer — Tejas LCA", color: "#2d3748", logo: "/assets/clients/HAL.png" },
-  { name: "BEL", initials: "BEL", product: "High-Frequency Transformer", color: "#1a365d" },
-  { name: "DRDO", initials: "DRDO", product: "All Transformers", color: "#2d3748" },
-  { name: "SITAR", initials: "SIT", product: "All Transformers", color: "#374151" },
-  { name: "BHEL", initials: "BHEL", product: "Wound Electronic Components", color: "#1e40af", logo: "/assets/clients/BHEL.png" },
-  { name: "ECIL", initials: "ECIL", product: "Wound Electronic Components", color: "#3730a3", logo: "/assets/clients/ECIL.png" },
-  { name: "MSEB", initials: "MSEB", product: "Linear Motion Potentiometer", color: "#c2410c" },
-  { name: "CWPRS", initials: "CW", product: "Toroidal Transformer", color: "#0e7490", logo: "/assets/clients/CWPRS.png" },
-  { name: "KSEB", initials: "KSEB", product: "Power Potentiometer", color: "#b91c1c", logo: "/assets/clients/KSEB.png" },
+  { name: "HAL", logo: "/assets/clients/HAL.png", zoom: "scale-[1.6]" },
+  { name: "BHEL", logo: "/assets/clients/BHEL.png", zoom: "scale-[1.1]" },
+  { name: "ECIL", logo: "/assets/clients/ECIL.png", zoom: "scale-[1.3]" },
+  { name: "CWPRS", logo: "/assets/clients/CWPRS.png", zoom: "scale-[1.2]" },
+  { name: "KSEB", logo: "/assets/clients/KSEB.png", zoom: "scale-[1.5]" },
+  { name: "Indian Air Force", initials: "IAF" },
+  { name: "Indian Navy", initials: "IN" },
+  { name: "DRDO", initials: "DRDO" },
+  { name: "BEL", initials: "BEL" },
+  { name: "SITAR", initials: "SITAR" },
+  { name: "MSEB", initials: "MSEB" },
 ];
 
 const commercialClients: Client[] = [
-  { name: "Tata Motors", initials: "TM", product: "Servo Potentiometer", color: "#1e293b", logo: "/assets/clients/tata.jpg" },
-  { name: "Tata Power", initials: "TP", product: "400 Hz Transformer", color: "#0f172a", logo: "/assets/clients/tata.jpg" },
-  { name: "Crompton Greaves", initials: "CG", product: "Wound Electronic Components", color: "#3f3f46" },
-  { name: "Forbes Marshall", initials: "FM", product: "Slide Wire Potentiometer", color: "#78350f", logo: "/assets/clients/Forbes.jpeg" },
-  { name: "Kirloskar Copland", initials: "KC", product: "Toroidal Transformer", color: "#164e63", logo: "/assets/clients/Kirloskar.svg" },
-  { name: "Aplab", initials: "AP", product: "Current Transformer", color: "#134e4a" },
-  { name: "Labindia", initials: "LI", product: "Toroidal Transformer", color: "#713f12", logo: "/assets/clients/labindia.avif" },
-  { name: "Scope T&M", initials: "ST", product: "Toroidal Transformer", color: "#44403c", logo: "/assets/clients/SCOPE-T&M.jpg" },
-  { name: "EON Infotech", initials: "EI", product: "All Transformers", color: "#4c1d95" },
-  { name: "Century Cement", initials: "CC", product: "Servo Potentiometer", color: "#0f172a" },
-  { name: "Wonder Cement", initials: "WC", product: "Servo Potentiometer", color: "#134e4a" },
-  { name: "Chettinad Cement", initials: "CC", product: "Servo Potentiometer", color: "#44403c" },
-  { name: "Trinetra Cement", initials: "TC", product: "Servo Potentiometer", color: "#1e3a5f" },
-  { name: "Shivam Cement", initials: "SC", product: "Servo Potentiometer", color: "#164e63" },
-  { name: "Vasavdatta Cement", initials: "VC", product: "Servo Potentiometer", color: "#14532d" },
-  { name: "Amrit Cement", initials: "AC", product: "Servo Potentiometer", color: "#3f3f46" },
-  { name: "Sree Jayajyoti", initials: "SJ", product: "Servo Potentiometer", color: "#7c2d12" },
-  { name: "Ghorahi Cement", initials: "GC", product: "Servo Potentiometer", color: "#4a5568" },
-  { name: "Seshasayee Paper", initials: "SP", product: "Linear Motion Potentiometer", color: "#14532d" },
-  { name: "Jayaswals Neco", initials: "JN", product: "High Wattage Resistor", color: "#581c87" },
-  { name: "Indian Card Clothing", initials: "IC", product: "Servo Potentiometer", color: "#831843" },
-  { name: "Supertech", initials: "ST", product: "Toroidal Transformer", color: "#9f1239" },
-  { name: "Artech Welders", initials: "AW", product: "Toroidal Transformer", color: "#1a1a2e" },
-  { name: "Nishko Instruments", initials: "NI", product: "Toroidal Transformer", color: "#16213e" },
-  { name: "Memory Electronics", initials: "ME", product: "400 Hz Transformer", color: "#0d3b66" },
-  { name: "Senergy Intellution", initials: "SI", product: "400 Hz Transformer", color: "#2d3436" },
-  { name: "United Technomech", initials: "UT", product: "Wound Electronic Components", color: "#4a5568" },
+  { name: "Tata", logo: "/assets/clients/tata.jpg", zoom: "scale-[1.0]" },
+  { name: "Forbes Marshall", logo: "/assets/clients/Forbes.jpeg", zoom: "scale-[1.0]" },
+  { name: "Kirloskar", logo: "/assets/clients/Kirloskar.svg", zoom: "scale-[1.2]" },
+  { name: "Labindia", logo: "/assets/clients/labindia.avif", zoom: "scale-[1.3]" },
+  { name: "Scope T&M", logo: "/assets/clients/SCOPE-T&M.jpg", zoom: "scale-[1.4]" },
+  { name: "Crompton Greaves", initials: "CG" },
+  { name: "Aplab", initials: "APLAB" },
+  { name: "EON Infotech", initials: "EON" },
+  { name: "Century Cement", initials: "CENTURY" },
+  { name: "Seshasayee Paper", initials: "SPB" },
+  { name: "Artech Welders", initials: "ARTECH" },
 ];
 
 /* ════════════════════════════════════════════
-   CLIENT CARD
+   LOGO CARD — mix-blend-mode removes white bg visually
    ════════════════════════════════════════════ */
 
-const ClientCard = ({ client }: { client: Client }) => (
-  <div className="group flex w-48 flex-col items-center justify-center gap-3 rounded-xl border border-border bg-card p-5 transition-shadow hover:shadow-md">
+const LogoCard = ({ client }: { client: Client }) => (
+  <div className="flex h-24 w-48 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-stone-100 p-4 dark:bg-stone-800/50">
     {client.logo ? (
-      <div className="flex h-14 w-14 items-center justify-center rounded-xl overflow-hidden transition-transform group-hover:scale-105">
-        <img src={client.logo} alt={client.name} className="h-full w-full object-contain" />
-      </div>
+      <img
+        src={client.logo}
+        alt={client.name}
+        className={`max-h-14 w-auto max-w-[130px] object-contain mix-blend-multiply grayscale dark:mix-blend-normal dark:invert ${client.zoom || ""}`}
+        loading="lazy"
+      />
     ) : (
-      <div
-        className="flex h-14 w-14 items-center justify-center rounded-xl text-white font-semibold text-base transition-transform group-hover:scale-105"
-        style={{ backgroundColor: client.color }}
-      >
-        {client.initials}
-      </div>
+      <span className="text-lg font-bold tracking-tight text-stone-500 dark:text-stone-400">
+        {client.initials || client.name}
+      </span>
     )}
-    <div className="text-center">
-      <p className="text-sm font-medium text-foreground leading-tight">
-        {client.name}
-      </p>
-      <p className="mt-0.5 text-[11px] text-muted-foreground leading-tight">
-        {client.product}
-      </p>
-    </div>
   </div>
 );
 
@@ -96,6 +84,7 @@ const CustomersSection = () => {
   return (
     <section className="border-t border-border py-20 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -107,32 +96,43 @@ const CustomersSection = () => {
             Our Customers
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            ETCC proudly serves over 500 customers across India. A
-            representative selection of key accounts.
+            Trusted by India&rsquo;s leading defence, government, and industrial
+            organisations.
           </p>
         </motion.div>
       </div>
 
-      {/* Two marquee rows — full width */}
+      {/* Marquee rows — full width, auto scroll, no chevrons */}
       <div className="relative mt-14">
         {/* Fade edges */}
-        <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-16 bg-gradient-to-r from-background to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-16 bg-gradient-to-l from-background to-transparent" />
+        <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
 
-        {/* Row 1 — defence & government, scrolls left */}
-        <Marquee pauseOnHover className="mb-4 [--duration:45s]">
+        {/* Row 1 — scrolls left */}
+        <Marquee pauseOnHover className="mb-4 [--duration:50s]">
           {governmentClients.map((client) => (
-            <ClientCard key={`r1-${client.name}`} client={client} />
+            <LogoCard key={`r1-${client.name}`} client={client} />
           ))}
         </Marquee>
 
-        {/* Row 2 — commercial, scrolls right */}
-        <Marquee pauseOnHover reverse className="[--duration:45s]">
+        {/* Row 2 — scrolls right */}
+        <Marquee pauseOnHover reverse className="[--duration:50s]">
           {commercialClients.map((client) => (
-            <ClientCard key={`r2-${client.name}`} client={client} />
+            <LogoCard key={`r2-${client.name}`} client={client} />
           ))}
         </Marquee>
       </div>
+
+      {/* Footer text */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="mt-10 text-center text-sm text-muted-foreground"
+      >
+        And 500+ more customers across defence, industrial, and commercial sectors.
+      </motion.p>
     </section>
   );
 };

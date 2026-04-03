@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { GOOGLE_MAPS_FACTORY_URL } from "@/lib/constants";
 
 const productLinks = [
-  { label: "Toroidal Transformers", href: "/toroidal-transformers" },
-  { label: "Potentiometers", href: "/potentiometer" },
+  { label: "Toroidal Transformers", href: "/toroidal-transformer" },
+  { label: "Linear Potentiometers", href: "/linear-potentiometer" },
+  { label: "Servo Potentiometers", href: "/potentiometer" },
   { label: "Current Transformers", href: "/current-transformer" },
-  { label: "Wire Wound Resistors", href: "/wirewound-resistors" },
+  { label: "Wire Wound Resistors", href: "/wirewound-resistor" },
+  { label: "Rheostats", href: "/rheostat" },
 ];
 
 const Footer = () => {
@@ -65,6 +68,24 @@ const Footer = () => {
                 Home
               </Link>
               <Link
+                href="/products"
+                className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+              >
+                Products
+              </Link>
+              <Link
+                href="/projects"
+                className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+              >
+                Projects
+              </Link>
+              <Link
+                href="/blog"
+                className="text-sm text-stone-500 transition-colors hover:text-stone-900"
+              >
+                Blog
+              </Link>
+              <Link
                 href="/about-us"
                 className="text-sm text-stone-500 transition-colors hover:text-stone-900"
               >
@@ -98,13 +119,19 @@ const Footer = () => {
                 <Phone className="h-4 w-4 shrink-0 text-stone-400" />
                 +91-20-30689099
               </a>
-              <div className="flex items-start gap-2 text-sm text-stone-500">
+              <a
+                href={GOOGLE_MAPS_FACTORY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2 text-sm text-stone-500 transition-colors hover:text-stone-900"
+                aria-label="Open factory address in Google Maps"
+              >
                 <MapPin className="h-4 w-4 shrink-0 mt-0.5 text-stone-400" />
                 <span>
                   Unit No. 11, Electronic Sadan No.-1, MIDC, Bhosari,
                   Pimpri-Chinchwad, Pune 411026
                 </span>
-              </div>
+              </a>
             </div>
           </div>
         </div>

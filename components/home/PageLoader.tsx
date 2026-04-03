@@ -22,7 +22,7 @@ const PageLoader = ({ children }: PageLoaderProps) => {
     <>
       {/* Loading overlay — fades out once ready */}
       <div
-        className="fixed inset-0 z-[100] flex items-center justify-center bg-white"
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-background"
         style={{
           opacity: ready ? 0 : 1,
           pointerEvents: ready ? "none" : "auto",
@@ -31,14 +31,14 @@ const PageLoader = ({ children }: PageLoaderProps) => {
       >
         <div className="flex flex-col items-center gap-4">
           <img
-            src="/assets/etcc-logo-blue.svg"
+            src="/assets/etcc-logo.svg"
             alt="ETCC"
             className="h-12 w-auto"
             style={{ animation: "pulse-subtle 1.5s ease-in-out infinite" }}
           />
-          <div className="h-0.5 w-16 overflow-hidden rounded-full bg-stone-100">
+          <div className="h-0.5 w-16 overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-stone-400"
+              className="h-full rounded-full bg-muted-foreground"
               style={{ animation: "loader-progress 1.2s ease-in-out infinite" }}
             />
           </div>

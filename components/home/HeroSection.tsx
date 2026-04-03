@@ -38,17 +38,10 @@ const HeroSection = ({ onQuoteClick }: HeroSectionProps) => {
             >
               {/* Animated conic-gradient border */}
               <span
-                className="absolute inset-0 rounded-full"
-                style={{
-                  padding: "1.5px",
-                  background: "conic-gradient(from var(--shiny-angle, 0deg), #e2e8f0, #a78bfa, #f472b6, #38bdf8, #e2e8f0)",
-                  WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                  WebkitMaskComposite: "xor",
-                  maskComposite: "exclude",
-                  animation: "shiny-border-rotate 6s linear infinite",
-                }}
+                aria-hidden
+                className="absolute inset-0 rounded-full shiny-conic-border"
               />
-              <span className="absolute inset-[1px] rounded-full bg-white" />
+              <span className="absolute inset-[1.5px] rounded-full bg-card" aria-hidden />
               <span className="relative font-medium">Trusted by Indian Defence &amp; Automotive OEMs</span>
               <ArrowRight className="relative h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>
@@ -56,7 +49,7 @@ const HeroSection = ({ onQuoteClick }: HeroSectionProps) => {
 
           {/* Main headline */}
           <h1 className="mt-8 text-5xl font-bold tracking-tighter text-foreground md:text-7xl animate-fade-in-up animation-delay-100">
-            Precision Electronic
+            Precision Electromagnetic
             <br />
             Components
           </h1>
@@ -78,7 +71,7 @@ const HeroSection = ({ onQuoteClick }: HeroSectionProps) => {
               <ArrowRight className="ml-2 h-4 w-4" />
             </ShimmerButton>
             <Link
-              href="/toroidal-transformers"
+              href="/toroidal-transformer"
               className="inline-flex items-center justify-center rounded-full border border-border bg-background px-8 h-12 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
             >
               Explore Products

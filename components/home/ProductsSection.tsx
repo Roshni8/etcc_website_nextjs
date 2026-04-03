@@ -160,7 +160,7 @@ const ProductsSection = () => {
         {/* Left chevron */}
         <button
           onClick={() => scroll("left")}
-          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 border border-stone-200 text-stone-600 shadow-md opacity-0 group-hover/carousel:opacity-100 transition-all duration-200 hover:bg-white hover:text-stone-900 hover:scale-105 active:scale-95"
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-card/90 border border-border text-muted-foreground shadow-md opacity-0 group-hover/carousel:opacity-100 transition-all duration-200 hover:bg-card hover:text-foreground hover:scale-105 active:scale-95"
           aria-label="Scroll left"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -169,7 +169,7 @@ const ProductsSection = () => {
         {/* Right chevron */}
         <button
           onClick={() => scroll("right")}
-          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 border border-stone-200 text-stone-600 shadow-md opacity-0 group-hover/carousel:opacity-100 transition-all duration-200 hover:bg-white hover:text-stone-900 hover:scale-105 active:scale-95"
+          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-card/90 border border-border text-muted-foreground shadow-md opacity-0 group-hover/carousel:opacity-100 transition-all duration-200 hover:bg-card hover:text-foreground hover:scale-105 active:scale-95"
           aria-label="Scroll right"
         >
           <ChevronRight className="h-5 w-5" />

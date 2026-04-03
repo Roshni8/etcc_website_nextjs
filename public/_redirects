@@ -5,22 +5,26 @@
 # www → non-www canonical redirect
 https://www.etccindia.com/*  https://etccindia.com/:splat  301
 
-/toroidal-power-transformers-manufacturers.html  /toroidal-transformers  301
-# TODO Phase 2: /products.html should redirect to a dedicated /products page, not homepage (soft 404 risk)
-/products.html  /  301
+# Legacy plural / old marketing paths → current URLs
+/toroidal-transformers  /toroidal-transformer  301
+/wirewound-resistors  /wirewound-resistor  301
+/blog/toroidal-vs-ei-transformers  /blog/toroidal-vs-ei-transformer  301
+/blog/why-audio-systems-demand-copper-toroidal-transformers  /blog/why-audio-systems-demand-copper-toroidal-transformer  301
+
+/toroidal-power-transformers-manufacturers.html  /toroidal-transformer  301
+/products.html  /products  301
 /about.html  /about-us  301
-# TODO Phase 2: /projects.html should redirect to a dedicated /projects page, not homepage (soft 404 risk)
-/projects.html  /  301
-/Rheostat.html  /wirewound-resistors  301
-/Wire-Wound-Resistor.html  /wirewound-resistors  301
+/projects.html  /projects  301
+/Rheostat.html  /rheostat  301
+/Wire-Wound-Resistor.html  /wirewound-resistor  301
 /Wire-wound-Single-turn-Potentiometer.html  /potentiometer  301
 /Linear-Potentiometer.html  /potentiometer  301
 /ETC-Brand-CT.html  /current-transformer  301
 /current-transformer-manufacturers.html  /current-transformer  301
 
 # Lowercase safety variants for mixed-case URLs
-/rheostat.html  /wirewound-resistors  301
-/wire-wound-resistor.html  /wirewound-resistors  301
+/rheostat.html  /rheostat  301
+/wire-wound-resistor.html  /wirewound-resistor  301
 /wire-wound-single-turn-potentiometer.html  /potentiometer  301
 /linear-potentiometer.html  /potentiometer  301
 /etc-brand-ct.html  /current-transformer  301

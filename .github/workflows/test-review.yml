@@ -102,8 +102,10 @@ jobs:
             "about-us.html"
             "current-transformer.html"
             "potentiometer.html"
-            "toroidal-transformers.html"
-            "wirewound-resistors.html"
+            "linear-potentiometer.html"
+            "toroidal-transformer.html"
+            "wirewound-resistor.html"
+            "rheostat.html"
             "404.html"
           )
 
