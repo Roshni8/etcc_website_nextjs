@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
 import HomeClient from "./HomeClient";
+import { SITE_URL, siteUrl } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: { absolute: "Toroidal Transformers & Precision Potentiometers | ETCC India" },
+  title: { absolute: "Toroidal Transformers, Potentiometer & CT Manufacturer | ETCC India" },
   description:
-    "ETCC manufactures precision toroidal transformers, current transformers, and wire wound potentiometers since 1994. Pune, India. Request a quote.",
+    "ETCC India manufactures toroidal transformers (10VA–15kVA), current transformers, wire wound potentiometers & resistors. Defence-proven. Pune facility.",
   alternates: {
-    canonical: "https://etccindia.com/",
+    canonical: siteUrl("/"),
   },
   openGraph: {
-    title: "Toroidal Transformers & Precision Potentiometers | ETCC India",
+    title: "Toroidal Transformers, Potentiometer & CT Manufacturer | ETCC India",
     description:
-      "ETCC manufactures precision toroidal transformers, current transformers, and wire wound potentiometers since 1994. Pune, India. Request a quote.",
-    url: "https://etccindia.com/",
+      "ETCC India manufactures toroidal transformers (10VA–15kVA), current transformers, wire wound potentiometers & resistors. Defence-proven. Pune facility.",
+    url: siteUrl("/"),
     siteName: "ETCC India — Efficient Toroidal Coil Corporation",
     type: "website",
     locale: "en_IN",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "ETCC India — Toroidal Transformers & Precision Electronic Components" }],
   },
 };
 
@@ -24,13 +26,13 @@ const siteSchema = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://etccindia.com/#organization",
+      "@id": `${SITE_URL}/#organization`,
       name: "Efficient Toroidal Coil Corporation",
       alternateName: "ETCC India",
-      url: "https://etccindia.com/",
+      url: siteUrl("/"),
       logo: {
         "@type": "ImageObject",
-        url: "https://etccindia.com/assets/etcc-logo.png",
+        url: siteUrl("/assets/etcc-logo.svg"),
       },
       foundingDate: "1994",
       description:
@@ -79,10 +81,10 @@ const siteSchema = {
     },
     {
       "@type": "LocalBusiness",
-      "@id": "https://etccindia.com/#local-business",
+      "@id": `${SITE_URL}/#local-business`,
       name: "Efficient Toroidal Coil Corporation",
       alternateName: "ETCC India",
-      url: "https://etccindia.com/",
+      url: siteUrl("/"),
       telephone: "+91-9822614244",
       email: "efficient_toroidal@rediffmail.com",
       foundingDate: "1994",
@@ -103,20 +105,32 @@ const siteSchema = {
       },
       priceRange: "Contact for quote",
       parentOrganization: {
-        "@id": "https://etccindia.com/#organization",
+        "@id": `${SITE_URL}/#organization`,
       },
     },
     {
       "@type": "WebSite",
-      "@id": "https://etccindia.com/#website",
-      url: "https://etccindia.com/",
+      "@id": `${SITE_URL}/#website`,
+      url: siteUrl("/"),
       name: "ETCC India",
       description:
         "Manufacturer of toroidal transformers, current transformers, potentiometers, and wire wound resistors since 1994.",
       publisher: {
-        "@id": "https://etccindia.com/#organization",
+        "@id": `${SITE_URL}/#organization`,
       },
       inLanguage: "en-IN",
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${SITE_URL}/#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: siteUrl("/"),
+        },
+      ],
     },
   ],
 };

@@ -1,0 +1,43 @@
+---
+description: USE WHEN editing UI components or styles. Enforces design tokens from docs/design-standards.md.
+globs: "**/*.tsx,**/*.css"
+alwaysApply: false
+---
+
+# Design System
+
+Full reference: [design-standards.md](mdc:docs/design-standards.md)
+
+## Container
+
+Every section's inner wrapper uses exactly: `mx-auto max-w-6xl px-6`. No other container pattern.
+
+## Colors — Semantic Tokens Only
+
+Never use raw Tailwind colors (`text-stone-500`, `bg-blue-700`) or hex values. Always use the semantic token.
+
+```tsx
+// BAD
+<p className="text-stone-500">...</p>
+<div className="bg-blue-700">...</div>
+
+// GOOD
+<p className="text-muted-foreground">...</p>
+<div className="bg-primary">...</div>
+```
+
+## Spacing
+
+Only use values from the spacing scale in `app/globals.css` section 4. Standard section padding: `py-20 md:py-32`.
+
+## Typography
+
+- Cooper (`font-heading`) for h1 page titles only.
+- Inter (default) for everything else — h2 through h6, body, labels.
+- One h1 per page. Never skip heading levels (h1 → h3).
+- Hero h1: `text-5xl md:text-7xl font-bold tracking-tighter`
+- Section h2: `text-4xl md:text-5xl font-bold tracking-tighter`
+
+## Cards
+
+Standard card: `rounded-lg border border-border bg-card p-4`. Use `shadow-card` for elevation. Do not invent card variants.

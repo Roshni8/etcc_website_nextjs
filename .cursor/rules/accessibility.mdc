@@ -1,0 +1,47 @@
+---
+description: USE WHEN creating or modifying interactive components. Accessibility (a11y) standards.
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# Accessibility
+
+## Semantic HTML
+
+Use the correct element for the job:
+
+```tsx
+// BAD
+<div onClick={handleClick}>Submit</div>
+<div className="nav">...</div>
+
+// GOOD
+<button onClick={handleClick}>Submit</button>
+<nav>...</nav>
+```
+
+Use `<main>`, `<section>`, `<article>`, `<aside>`, `<header>`, `<footer>` where appropriate.
+
+## Keyboard Navigation
+
+- All interactive elements (buttons, links, modals, dropdowns) must be operable with Tab, Enter, and Escape.
+- Modals must trap focus inside and return focus to the trigger element on close.
+
+## Contrast
+
+Minimum 4.5:1 contrast ratio for normal text, 3:1 for large text (18px+ bold or 24px+ regular). Use `text-foreground` on `bg-background` and `text-primary-foreground` on `bg-primary`.
+
+## Icon Buttons
+
+Icon-only buttons must have `aria-label`:
+
+```tsx
+<button aria-label="Close menu" onClick={onClose}>
+  <XIcon className="h-5 w-5" />
+</button>
+```
+
+## Images and Headings
+
+- Content images: descriptive `alt` text. Decorative: `alt="" aria-hidden="true"`.
+- One h1 per page. Sequential levels (h1 → h2 → h3). Never skip levels.

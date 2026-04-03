@@ -1,0 +1,49 @@
+---
+description: USE WHEN creating or modifying page files. SEO metadata, structured data, and content quality rules.
+globs: "app/**/page.tsx,app/**/PageClient.tsx"
+alwaysApply: false
+---
+
+# SEO and Content Quality
+
+## Required Metadata
+
+Every `page.tsx` must export a `metadata` object with:
+
+```tsx
+export const metadata: Metadata = {
+  title: "Unique Page Title | ETCC India",
+  description: "Unique 150-160 char description with primary keyword.",
+  alternates: { canonical: "https://www.etccindia.com/page-slug" },
+  openGraph: {
+    title: "...",
+    description: "...",
+    url: "https://www.etccindia.com/page-slug",
+    siteName: "ETCC India",
+    type: "website",
+  },
+};
+```
+
+Do not duplicate titles or descriptions across pages.
+
+## JSON-LD Structured Data
+
+Every page must include at minimum:
+
+- `Organization` schema (company details)
+- `BreadcrumbList` schema (navigation path)
+- Product pages additionally need `Product` schema with specs
+
+Render JSON-LD as a `<script type="application/ld+json">` tag in the server component `page.tsx`.
+
+## Heading Hierarchy
+
+- One `<h1>` per page — the page title.
+- `<h2>` for major sections.
+- `<h3>` for items within sections.
+- Never skip levels. Never use headings for styling only.
+
+## Content Quality
+
+Include specific technical details: VA ratings, accuracy classes, temperature ranges, certifications. Avoid generic phrases ("world-class", "best-in-class") without substantiation. Keep `public/sitemap.xml` in sync when adding/removing pages.

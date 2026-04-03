@@ -1,0 +1,46 @@
+---
+description: USE WHEN creating or modifying pages, layouts, or app directory files. Next.js architecture patterns.
+globs: "app/**/*.tsx,app/**/*.ts"
+alwaysApply: false
+---
+
+# Next.js Architecture
+
+## Server Components First
+
+Default to Server Components. Only add `"use client"` when the component genuinely needs browser APIs (`useState`, `useEffect`, `onClick`, animations).
+
+```tsx
+// BAD — "use client" just to render static content
+"use client";
+export default function ProductSpec({ data }) { ... }
+
+// GOOD — static content stays on the server
+export default function ProductSpec({ data }) { ... }
+```
+
+## Metadata in Server Components
+
+Export `metadata` and render JSON-LD `<script>` tags in `page.tsx` (server component), never inside a `"use client"` component.
+
+## Dynamic Imports for Heavy Components
+
+Wrap large client components with `dynamic()` to keep the initial bundle small:
+
+```tsx
+const QuoteModal = dynamic(() => import("@/components/QuoteModal"), {
+  ssr: false,
+});
+```
+
+## Static Export
+
+This site uses `output: "export"`. No dynamic routes, no `generateStaticParams`, no server-side APIs. All pages are statically generated at build time.
+
+## Component Responsibility
+
+Each component does one thing. A `ProductCard` displays a product. A `QuoteModal` handles the quote form. Do not combine unrelated concerns.
+
+## Data Separation
+
+Product specs, feature lists, and client testimonials live in data objects — not scattered through JSX markup.

@@ -1,170 +1,250 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { productNavSections } from "@/lib/product-nav";
 
 const QuoteModal = dynamic(() => import("@/components/QuoteModal"), { ssr: false });
 
-const productLinks = [
-  { label: "Toroidal Transformers", href: "/toroidal-transformers" },
-  { label: "Potentiometers", href: "/potentiometer" },
-  { label: "Current Transformers", href: "/current-transformer" },
-  { label: "Wire Wound Resistors & Rheostats", href: "/wirewound-resistors" },
-];
+/* ─── Nav Items ─── */
+
+const navItems = [
+  { label: "Products", hasDropdown: true },
+  { label: "Blog", href: "/blog" },
+  { label: "About Us", href: "/about-us" },
+] as const;
+
+/** Desktop nav — same classes for Products, Blog, About Us: muted text, darker on hover + bg */
+const navDesktopItem =
+  "rounded-lg px-3 py-1.5 text-sm font-medium text-stone-500 transition-all duration-200 ease-out motion-reduce:transition-none hover:bg-stone-100 hover:text-stone-900";
+
+const navDesktopProductsButton =
+  "group inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent";
+
+/* ─── Header ─── */
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [productsOpen, setProductsOpen] = useState(false);
   const [quoteOpen, setQuoteOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
 
-  const isProductPage = productLinks.some((l) => pathname === l.href);
+  const productsButtonRef = useRef<HTMLButtonElement>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const leaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openDropdown = useCallback(() => {
+    if (leaveTimeoutRef.current) { clearTimeout(leaveTimeoutRef.current); leaveTimeoutRef.current = null; }
+    if (dropdownOpen) return;
+    hoverTimeoutRef.current = setTimeout(() => setDropdownOpen(true), 100);
+  }, [dropdownOpen]);
+
+  const closeDropdown = useCallback(() => {
+    if (hoverTimeoutRef.current) { clearTimeout(hoverTimeoutRef.current); hoverTimeoutRef.current = null; }
+    leaveTimeoutRef.current = setTimeout(() => setDropdownOpen(false), 250);
+  }, []);
+
+  const cancelClose = useCallback(() => {
+    if (leaveTimeoutRef.current) { clearTimeout(leaveTimeoutRef.current); leaveTimeoutRef.current = null; }
+  }, []);
+
+  useEffect(() => { setDropdownOpen(false); setMobileOpen(false); }, [pathname]);
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => { if (e.key === "Escape") setDropdownOpen(false); };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  }, []);
+
+  let itemIndex = 0;
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
-        <div className="main-container">
+      <header
+        className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80"
+        style={{ borderBottom: "1px solid rgba(0,0,0,0.08)" }}
+      >
+        <div className="mx-auto max-w-6xl px-6">
           <div className="flex h-14 items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5">
-              <img src="/assets/etcc-logo.svg" alt="ETCC Logo" className="h-9 w-auto" width="120" height="36" />
-              <span className="hidden sm:block text-xs font-medium text-stone-500 leading-tight max-w-[160px]">
+            {/* Left: Logo */}
+            <Link href="/" className="flex items-center gap-3 shrink-0">
+              <img src="/assets/etcc-logo.svg" alt="ETCC Logo" className="h-11 w-auto" width="154" height="44" />
+              <span className="hidden sm:block text-[14px] font-medium text-stone-900 leading-tight whitespace-nowrap">
                 Efficient Toroidal Coil Corporation
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
-              <Link
-                href="/"
-                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-stone-100 hover:text-primary ${
-                  pathname === "/" ? "bg-stone-100 text-primary" : "text-stone-700"
-                }`}
-              >
-                Home
-              </Link>
-
-              {/* Products Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setProductsOpen(true)}
-                onMouseLeave={() => setProductsOpen(false)}
-              >
-                <button
-                  className={`flex items-center gap-1 rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-stone-100 hover:text-primary ${
-                    isProductPage ? "bg-stone-100 text-primary" : "text-stone-700"
-                  }`}
-                  aria-expanded={productsOpen}
-                  aria-haspopup="true"
-                >
-                  Products
-                  <ChevronDown className={`h-4 w-4 transition-transform ${productsOpen ? "rotate-180" : ""}`} />
-                </button>
-                {productsOpen && (
-                  <div className="absolute left-0 top-full z-50 mt-0 w-64 rounded-lg border border-stone-200 bg-white p-2 shadow-elevated animate-fade-in">
-                    {productLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className={`block rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-stone-100 ${
-                          pathname === link.href
-                            ? "font-medium text-primary bg-stone-100"
-                            : "text-stone-700"
-                        }`}
+            {/* Right: Nav + separator + CTA */}
+            <div className="hidden lg:flex items-center gap-1">
+              <nav className="flex items-center gap-0.5" aria-label="Main navigation">
+                {navItems.map((item) => {
+                  if ("hasDropdown" in item) {
+                    return (
+                      <div
+                        key={item.label}
+                        className="relative"
+                        onMouseEnter={openDropdown}
+                        onMouseLeave={closeDropdown}
                       >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+                        <button
+                          ref={productsButtonRef}
+                          type="button"
+                          className={`${navDesktopProductsButton} ${navDesktopItem}`}
+                          aria-expanded={dropdownOpen}
+                          aria-haspopup="true"
+                        >
+                          {item.label}
+                          <ChevronDown
+                            className={`h-3.5 w-3.5 shrink-0 text-current transition-all duration-200 ease-out motion-reduce:transition-none ${
+                              dropdownOpen ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
 
-              <Link
-                href="/about-us"
-                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-stone-100 hover:text-primary ${
-                  pathname === "/about-us" ? "bg-stone-100 text-primary" : "text-stone-700"
-                }`}
-              >
-                About Us
-              </Link>
-            </nav>
+                        {/* Dropdown — positioned directly under the Products button */}
+                        <div
+                          className="absolute left-1/2 top-full z-50 pt-2"
+                          style={{
+                            transform: "translateX(-50%)",
+                            pointerEvents: dropdownOpen ? "auto" : "none",
+                          }}
+                          onMouseEnter={cancelClose}
+                          onMouseLeave={closeDropdown}
+                        >
+                          {/* Hover bridge */}
+                          <div className="h-1" />
 
-            {/* Desktop CTA */}
-            <div className="hidden items-center gap-3 lg:flex">
-              <Button
+                          <div
+                            style={{
+                              width: "700px",
+                              opacity: dropdownOpen ? 1 : 0,
+                              transform: dropdownOpen ? "scale(1) translateY(0)" : "scale(0.97) translateY(-4px)",
+                              transition: "opacity 200ms cubic-bezier(0.16, 1, 0.3, 1), transform 200ms cubic-bezier(0.16, 1, 0.3, 1)",
+                            }}
+                          >
+                            {/* Arrow */}
+                            <div
+                              className="mx-auto -mb-[5px] h-2.5 w-2.5 rotate-45 bg-white"
+                              style={{
+                                border: "1px solid rgba(0,0,0,0.08)",
+                                borderBottom: "none",
+                                borderRight: "none",
+                              }}
+                            />
+
+                            {/* Panel */}
+                            <div
+                              className="relative overflow-hidden rounded-2xl bg-white"
+                              style={{
+                                border: "1px solid rgba(0,0,0,0.08)",
+                                boxShadow: "0 8px 30px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)",
+                              }}
+                            >
+                              <div className="flex divide-x divide-stone-200/80 p-2">
+                                {productNavSections.map((section) => (
+                                  <div key={section.label} className="flex-1 p-2.5">
+                                    <p className="px-3 pt-1.5 pb-2 text-[11px] font-semibold uppercase tracking-wider text-stone-400">
+                                      {section.label}
+                                    </p>
+                                    {section.items.map((item) => {
+                                      const idx = itemIndex++;
+                                      return (
+                                        <Link
+                                          key={item.href + item.title}
+                                          href={item.href}
+                                          className="flex flex-col rounded-xl px-3 py-2.5 transition-colors duration-150 hover:bg-stone-100 group"
+                                          style={{
+                                            opacity: dropdownOpen ? 1 : 0,
+                                            transform: dropdownOpen ? "translateY(0)" : "translateY(6px)",
+                                            transition: `opacity 200ms ease ${idx * 40}ms, transform 200ms ease ${idx * 40}ms, background-color 150ms ease`,
+                                          }}
+                                        >
+                                          <span className="text-[14px] font-medium text-stone-900 group-hover:text-black">
+                                            {item.title}
+                                          </span>
+                                          <span className="mt-1 text-[12px] text-stone-500 leading-snug">
+                                            {item.subtitle}
+                                          </span>
+                                        </Link>
+                                      );
+                                    })}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  const linkActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className={navDesktopItem}
+                      aria-current={linkActive ? "page" : undefined}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              <div className="mx-2 h-5 w-px bg-stone-200" />
+
+              <button
                 onClick={() => setQuoteOpen(true)}
-                className="bg-primary text-primary-foreground hover:bg-primary-dark"
+                className="rounded-full bg-stone-900 px-4 py-1.5 text-sm font-medium text-white hover:bg-stone-800 active:scale-[0.97]"
+                style={{ transition: "background-color 150ms ease, transform 160ms ease-out" }}
               >
                 Get a Quote
-              </Button>
+              </button>
             </div>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Toggle */}
             <button
               className="lg:hidden rounded-md p-2 text-stone-700 hover:bg-stone-100"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle navigation menu"
             >
-              {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Drawer */}
         {mobileOpen && (
-          <div className="border-t border-stone-200 bg-white lg:hidden animate-fade-in">
-            <nav className="main-container flex flex-col gap-1 py-4" aria-label="Mobile navigation">
-              <Link
-                href="/"
-                className={`rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-stone-100 ${
-                  pathname === "/" ? "font-medium text-primary bg-stone-100" : "text-stone-700"
-                }`}
-                onClick={() => setMobileOpen(false)}
-              >
+          <div className="lg:hidden bg-white" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+            <nav className="mx-auto max-w-6xl px-6 py-4 flex flex-col gap-0.5" aria-label="Mobile navigation">
+              <Link href="/" className="rounded-md px-3 py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50" onClick={() => setMobileOpen(false)}>
                 Home
               </Link>
-              <hr className="my-2 border-stone-200" />
-              <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-stone-400">
-                Products
-              </p>
-              {productLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-stone-100 ${
-                    pathname === link.href
-                      ? "font-medium text-primary bg-stone-100"
-                      : "text-stone-700"
-                  }`}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {link.label}
-                </Link>
+              {productNavSections.map((section) => (
+                <div key={section.label}>
+                  <p className="px-3 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-stone-400">{section.label}</p>
+                  {section.items.map((link) => (
+                    <Link key={link.href + link.title} href={link.href} className="rounded-md px-3 py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50 block" onClick={() => setMobileOpen(false)}>
+                      {link.title}
+                    </Link>
+                  ))}
+                </div>
               ))}
-              <hr className="my-2 border-stone-200" />
+              <div className="my-2 border-t border-stone-100" />
               <Link
-                href="/about-us"
-                className={`rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-stone-100 ${
-                  pathname === "/about-us" ? "font-medium text-primary bg-stone-100" : "text-stone-700"
-                }`}
+                href="/blog"
+                className="rounded-md px-3 py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50"
                 onClick={() => setMobileOpen(false)}
               >
-                About Us
+                Blog
               </Link>
-              <hr className="my-2 border-stone-200" />
-              <Button
-                onClick={() => {
-                  setQuoteOpen(true);
-                  setMobileOpen(false);
-                }}
-                className="mt-2 w-full bg-primary text-primary-foreground hover:bg-primary-dark"
-              >
+              <Link href="/about-us" className="rounded-md px-3 py-2.5 text-sm font-medium text-stone-600 hover:bg-stone-50" onClick={() => setMobileOpen(false)}>About Us</Link>
+              <button onClick={() => { setQuoteOpen(true); setMobileOpen(false); }} className="mt-3 w-full rounded-full py-2.5 text-sm font-medium text-white bg-stone-900 hover:bg-stone-800 transition-colors">
                 Get a Quote
-              </Button>
+              </button>
             </nav>
           </div>
         )}

@@ -1,0 +1,45 @@
+---
+description: Core project conventions for the ETCC India website
+alwaysApply: true
+---
+
+# Project Standards
+
+## Source of Truth
+
+- Design values: `docs/design-standards.md`
+- Review goals: `docs/testing-goals.md`
+- CSS tokens: `app/globals.css`
+
+## Naming
+
+- Files: `kebab-case.tsx` (e.g. `product-card.tsx`)
+- Components: `PascalCase` (e.g. `ProductCard`)
+- CSS classes: Tailwind utilities only — no custom class names outside `globals.css`
+
+## No Magic Numbers
+
+Hardcoded values (company name, phone, address, product specs) must live in a single data file or constant, never inline in JSX.
+
+```tsx
+// BAD
+<p>+91 20 2712 7873</p>
+
+// GOOD
+import { COMPANY } from "@/lib/constants";
+<p>{COMPANY.phone}</p>
+```
+
+## Data Separation
+
+Product specs, feature lists, and application descriptions go in data objects at the top of the file or in a separate data file — not scattered through JSX.
+
+## TypeScript
+
+- No `any`. Use `unknown` and narrow with type guards.
+- Use `import type` for type-only imports.
+- Define prop types with `interface`, not inline.
+
+## Unused Code
+
+Remove unused imports, components, and variables. Do not leave commented-out code blocks.

@@ -1,0 +1,340 @@
+name: Test Branch Review
+
+on:
+  push:
+    branches: [test]
+  pull_request:
+    branches: [test, main]
+
+concurrency:
+  group: review-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  # ───────────────────────────────────────────────
+  # 1. TypeScript — Architecture & Code Structure
+  # ───────────────────────────────────────────────
+  typecheck:
+    name: "TypeScript"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+        id: typecheck
+
+  # ───────────────────────────────────────────────
+  # 2. ESLint — Maintainability & Accessibility
+  # ───────────────────────────────────────────────
+  lint:
+    name: "ESLint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+        id: lint
+
+  # ───────────────────────────────────────────────
+  # 3. Build — Performance, SEO & Error Handling
+  # ───────────────────────────────────────────────
+  build:
+    name: "Build & Bundle"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+
+      - name: Build static export
+        run: npm run build
+        id: build
+
+      - name: Report bundle size
+        if: always()
+        run: |
+          echo "## Bundle Size Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ -d "out" ]; then
+            TOTAL=$(du -sh out | cut -f1)
+            echo "**Total output size:** $TOTAL" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+
+            echo "### HTML Pages" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            find out -name "*.html" -exec du -sh {} \; | sort -rh >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+
+            if [ -d "out/_next/static" ]; then
+              echo "### Static Assets" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              JS_SIZE=$(find out/_next/static -name "*.js" -exec du -cb {} + 2>/dev/null | tail -1 | cut -f1)
+              CSS_SIZE=$(find out/_next/static -name "*.css" -exec du -cb {} + 2>/dev/null | tail -1 | cut -f1)
+              echo "JavaScript: $(echo $JS_SIZE | numfmt --to=iec 2>/dev/null || echo "${JS_SIZE:-0} bytes")" >> $GITHUB_STEP_SUMMARY
+              echo "CSS:        $(echo $CSS_SIZE | numfmt --to=iec 2>/dev/null || echo "${CSS_SIZE:-0} bytes")" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "⚠️ No \`out/\` directory found — build may have failed." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Check for missing pages
+        if: success()
+        run: |
+          EXPECTED_PAGES=(
+            "index.html"
+            "about-us.html"
+            "current-transformer.html"
+            "potentiometer.html"
+            "linear-potentiometer.html"
+            "toroidal-transformer.html"
+            "wirewound-resistor.html"
+            "rheostat.html"
+            "404.html"
+          )
+
+          MISSING=0
+          echo "## Page Generation Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          for page in "${EXPECTED_PAGES[@]}"; do
+            if [ -f "out/$page" ]; then
+              echo "✅ $page" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "❌ **MISSING:** $page" >> $GITHUB_STEP_SUMMARY
+              MISSING=$((MISSING + 1))
+            fi
+          done
+
+          if [ $MISSING -gt 0 ]; then
+            echo ""
+            echo "::error::$MISSING expected page(s) missing from build output"
+            exit 1
+          fi
+
+  # ───────────────────────────────────────────────
+  # 4. Design System Compliance
+  # ───────────────────────────────────────────────
+  design-system:
+    name: "Design System"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Run design system checks
+        run: npx tsx scripts/design-lint.ts
+
+  # ───────────────────────────────────────────────
+  # 5. Security
+  # ───────────────────────────────────────────────
+  security:
+    name: "Security"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan for exposed secrets
+        run: |
+          echo "## Security Scan" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          ISSUES=0
+
+          # Check for hardcoded API keys / secrets in source files
+          if grep -rn --include="*.tsx" --include="*.ts" --include="*.js" \
+            -E '(SUPABASE_KEY|API_KEY|SECRET|PASSWORD|TOKEN)\s*[:=]\s*["\x27][A-Za-z0-9+/=]{20,}' \
+            --exclude-dir=node_modules --exclude-dir=.next --exclude-dir=out .; then
+            echo "❌ **Potential hardcoded secrets found in source**" >> $GITHUB_STEP_SUMMARY
+            ISSUES=$((ISSUES + 1))
+          else
+            echo "✅ No hardcoded secrets detected" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Check for .env files that shouldn't be committed
+          if find . -name ".env" -o -name ".env.local" -o -name ".env.production" | grep -q .; then
+            echo "❌ **.env file(s) found in repository**" >> $GITHUB_STEP_SUMMARY
+            ISSUES=$((ISSUES + 1))
+          else
+            echo "✅ No .env files committed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Check for dangerouslySetInnerHTML usage
+          DANGEROUS=$(grep -rn --include="*.tsx" --include="*.ts" "dangerouslySetInnerHTML" \
+            --exclude-dir=node_modules --exclude-dir=.next || true)
+          if [ -n "$DANGEROUS" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **dangerouslySetInnerHTML usage detected (review for XSS):**" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "$DANGEROUS" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ No dangerouslySetInnerHTML usage" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ $ISSUES -gt 0 ]; then
+            echo "::error::$ISSUES security issue(s) found"
+            exit 1
+          fi
+
+  # ───────────────────────────────────────────────
+  # 6. SEO Validation
+  # ───────────────────────────────────────────────
+  seo:
+    name: "SEO"
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
+      - name: Validate SEO essentials
+        run: |
+          echo "## SEO Validation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          ISSUES=0
+
+          # Check sitemap exists
+          if [ -f "out/sitemap.xml" ]; then
+            echo "✅ sitemap.xml present" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **sitemap.xml missing**" >> $GITHUB_STEP_SUMMARY
+            ISSUES=$((ISSUES + 1))
+          fi
+
+          # Check robots.txt exists
+          if [ -f "out/robots.txt" ]; then
+            echo "✅ robots.txt present" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **robots.txt missing**" >> $GITHUB_STEP_SUMMARY
+            ISSUES=$((ISSUES + 1))
+          fi
+
+          # Check each HTML page for required meta tags
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Page Meta Tags" >> $GITHUB_STEP_SUMMARY
+
+          for html in out/*.html; do
+            PAGE=$(basename "$html")
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**$PAGE**" >> $GITHUB_STEP_SUMMARY
+
+            # Title tag
+            if grep -q "<title>" "$html"; then
+              TITLE=$(grep -oP '(?<=<title>).*?(?=</title>)' "$html" | head -1)
+              LEN=${#TITLE}
+              if [ $LEN -lt 30 ] || [ $LEN -gt 65 ]; then
+                echo "⚠️ Title length: $LEN chars (aim for 30-65)" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "✅ Title: $TITLE ($LEN chars)" >> $GITHUB_STEP_SUMMARY
+              fi
+            else
+              echo "❌ Missing \`<title>\` tag" >> $GITHUB_STEP_SUMMARY
+              ISSUES=$((ISSUES + 1))
+            fi
+
+            # Meta description
+            if grep -q 'name="description"' "$html"; then
+              DESC=$(grep -oP '(?<=name="description" content=")[^"]*' "$html" | head -1)
+              DLEN=${#DESC}
+              if [ $DLEN -lt 70 ] || [ $DLEN -gt 160 ]; then
+                echo "⚠️ Description length: $DLEN chars (aim for 70-160)" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "✅ Description: $DLEN chars" >> $GITHUB_STEP_SUMMARY
+              fi
+            else
+              echo "❌ Missing meta description" >> $GITHUB_STEP_SUMMARY
+              ISSUES=$((ISSUES + 1))
+            fi
+
+            # H1 count
+            H1_COUNT=$(grep -co "<h1" "$html" || echo "0")
+            if [ "$H1_COUNT" -eq 1 ]; then
+              echo "✅ Single h1 tag" >> $GITHUB_STEP_SUMMARY
+            elif [ "$H1_COUNT" -eq 0 ]; then
+              echo "❌ No h1 tag found" >> $GITHUB_STEP_SUMMARY
+              ISSUES=$((ISSUES + 1))
+            else
+              echo "⚠️ Multiple h1 tags ($H1_COUNT) — should be exactly 1" >> $GITHUB_STEP_SUMMARY
+            fi
+
+            # JSON-LD structured data
+            if grep -q 'application/ld+json' "$html"; then
+              echo "✅ JSON-LD structured data present" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "⚠️ No JSON-LD structured data" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          if [ $ISSUES -gt 0 ]; then
+            echo ""
+            echo "::warning::$ISSUES SEO issue(s) found — see summary for details"
+          fi
+
+  # ───────────────────────────────────────────────
+  # Summary — Aggregates all results
+  # ───────────────────────────────────────────────
+  review-summary:
+    name: "Review Summary"
+    if: always()
+    needs: [typecheck, lint, build, design-system, security, seo]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate review summary
+        run: |
+          echo "# 🔍 Test Branch Review Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Category | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|----------|--------|" >> $GITHUB_STEP_SUMMARY
+
+          STATUS_TC="${{ needs.typecheck.result }}"
+          STATUS_LINT="${{ needs.lint.result }}"
+          STATUS_BUILD="${{ needs.build.result }}"
+          STATUS_DS="${{ needs.design-system.result }}"
+          STATUS_SEC="${{ needs.security.result }}"
+          STATUS_SEO="${{ needs.seo.result }}"
+
+          icon() { if [ "$1" = "success" ]; then echo "✅"; elif [ "$1" = "skipped" ]; then echo "⏭️"; else echo "❌"; fi; }
+
+          echo "| TypeScript | Architecture & Code Structure | $(icon $STATUS_TC) $STATUS_TC |" >> $GITHUB_STEP_SUMMARY
+          echo "| ESLint | Maintainability & Accessibility | $(icon $STATUS_LINT) $STATUS_LINT |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build & Bundle | Performance & Error Handling | $(icon $STATUS_BUILD) $STATUS_BUILD |" >> $GITHUB_STEP_SUMMARY
+          echo "| Design System | Design System Compliance | $(icon $STATUS_DS) $STATUS_DS |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security | Security | $(icon $STATUS_SEC) $STATUS_SEC |" >> $GITHUB_STEP_SUMMARY
+          echo "| SEO | SEO & Content Quality | $(icon $STATUS_SEO) $STATUS_SEO |" >> $GITHUB_STEP_SUMMARY
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "_Review categories from \`docs/testing-goals.md\`_" >> $GITHUB_STEP_SUMMARY
+
+          # Fail if any critical job failed
+          if [ "$STATUS_TC" = "failure" ] || [ "$STATUS_LINT" = "failure" ] || \
+             [ "$STATUS_BUILD" = "failure" ] || [ "$STATUS_SEC" = "failure" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**❌ Review FAILED — fix critical issues before merging to main**" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
